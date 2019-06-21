@@ -1,9 +1,17 @@
 from flask import Flask;
 from config import Config;
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate;
 
 
 app = Flask(__name__)
 #accessing configuration object from config.py
 app.config.from_object(Config)
+db = SQLAlchemy(app)
 
-from app import routes
+if __name__ == '__main__':
+    db.create_all()
+
+
+from app import routes, models
+
