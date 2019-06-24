@@ -35,9 +35,3 @@ class enrolment(db.Model):
         return '<Student {}'.format(self.studentname)
 
 
-def init_db():
-    db.create_all()
-
-    new_user = users(username='johnt07', password='bigfish09', useremail='johntron@gmail.com')
-    db.session.add(new_user)
-    db.session.commit();
