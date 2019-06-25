@@ -23,11 +23,16 @@
         <ul>
 
             {% for message in messages %}
-            <li>{{</li>
+            <li>{{ message }}</li>
+            {% endfor %}
 
 
 
         </ul>
+
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
 
 
 
