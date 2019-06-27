@@ -33,9 +33,34 @@ def Login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        
+    
+
+        username = ""
         
 
+        userbyname = Users.query.filter_by(username=form.username_or_email.data).first()
+        if(userbyname is None):
+            userbyemail = Users.query.filter_by(useremail=form.username_or_email.data).first()
+
+            if(userbyemail is None):
+                print("Entered username or email is not an email.")
+                #raise ValidationError("USER DOES NOT EXIST!")
+            else:
+                username = userbyemail
+        else:
+            username = userbyname
+    
+        
+
+        userpassword = Users.query.filter_by(password=form.password.data).first()
+        if(userpassword is None):
+            print("The provided password was not valid.")
+        else:
+            if(userpassword.username == username):
+                return redirect("/signup")
+        
+
+        
 
 
 
