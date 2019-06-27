@@ -1,14 +1,14 @@
 from app import app, db
 from app.models import Users
 from flask import render_template, flash, redirect, request
-from app.forms import SignupForm
+from app.forms import SignupForm, LoginForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 
 
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def signup():
+def Signup():
     form = SignupForm()
 
     if form.validate_on_submit():
@@ -23,17 +23,24 @@ def signup():
         
 
         flash('Login requested for user{}, remember_me={}'.format(form.username.data, form.remember_me.data))
-        return redirect('/index')
+        return redirect('/login')
+    return render_template('signup.html', title='Sign Up', form=form)
 
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def Login():
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        
         
 
 
 
 
-
-    return render_template('signup.html', title='Sign Up', form=form)
-
+        return redirect('/signup')
+    return render_template('login.html', title='Log In', form=form)
 
 
 

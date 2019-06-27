@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>VR EDUCATUM</title>
+
+    </head>
+
+
+    <body>
+        <h1>Welcome to VR EDUCATUM, LOGIN BELOW</h1>
+    </body>
+
+
+    {% block content %}
+
+
+    <h1>Sign Up</h1>
+    <form action="" method="post" novalidate>
+        {{form.hidden_tag() }}
+        <p>
+            {{ form.username_or_email.label }}<br>
+            {{form.username_or_email(size=32)}}<br>
+            {% for error in form.username_or_email.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{form.password.label}}<br>
+            {{form.password(size=32)}}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+        <p>{{form.remember_me()}} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit()}}</p>
+
+
+    </form>
+
+
+
+
+
+
+
+
+    {% endblock %}
+
+
+</html>
