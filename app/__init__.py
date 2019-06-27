@@ -9,9 +9,8 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 
-if __name__ == '__main__':
-    db.create_all()
-
+if __name__ == "__main__" :
+    app.run()
 
 from app import routes, models
 
