@@ -1,7 +1,7 @@
 from app import app, db
 from app.models import Users
 from flask import render_template, flash, redirect, request
-from app.forms import LoginForm
+from app.forms import SignupForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 
 
@@ -9,7 +9,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Le
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    form = LoginForm()
+    form = SignupForm()
 
     if form.validate_on_submit():
 
