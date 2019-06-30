@@ -3,6 +3,7 @@ from app.models import Users
 from flask import render_template, flash, redirect, request
 from app.forms import SignupForm, LoginForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from flask_login import current_user, login_user
 
 
 
@@ -32,40 +33,19 @@ def Signup():
 def Login():
     form = LoginForm()
 
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
     if form.validate_on_submit():
-    
+        user = Users.query.filter_by(username=form.username_or_email.data).first()
+        if user is None or not Users.query.filter_by(userpassword=form.userpassword).first():
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('index'))
 
-        username = ""
+    return render_template('login.html', title='Login', form=form)
         
 
-        userbyname = Users.query.filter_by(username=form.username_or_email.data).first()
-        if(userbyname is None):
-            userbyemail = Users.query.filter_by(useremail=form.username_or_email.data).first()
-
-            if(userbyemail is None):
-                print("Entered username or email is not an email.")
-                #raise ValidationError("USER DOES NOT EXIST!")
-            else:
-                username = userbyemail
-        else:
-            username = userbyname
-    
-        
-
-        userpassword = Users.query.filter_by(password=form.password.data).first()
-        if(userpassword is None):
-            print("The provided password was not valid.")
-        else:
-            if(userpassword.username == username):
-                return redirect("/signup")
-        
-
-        
-
-
-
-        return redirect('/signup')
-    return render_template('login.html', title='Log In', form=form)
 
 
 

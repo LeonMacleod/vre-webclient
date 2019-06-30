@@ -1,6 +1,7 @@
-from app import db
+from app import db, login
+from flask_login import UserMixin
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.VARCHAR(255), unique=True)
     password = db.Column(db.VARCHAR(255))
@@ -34,3 +35,7 @@ class Enrolment(db.Model):
     def __repr__(self):
         return '<Student {}'.format(self.studentname)
 
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(uid))
