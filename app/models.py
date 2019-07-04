@@ -9,6 +9,8 @@ class Users(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+    def get_id(self):
+           return (self.uid)
 
 class Students(db.Model):
     studentid = db.Column(db.Integer, primary_key=True)
@@ -37,5 +39,6 @@ class Enrolment(db.Model):
 
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(uid))
+def load_user(uid):
+
+    return Users.query.get(int(uid))

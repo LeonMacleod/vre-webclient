@@ -1,9 +1,9 @@
 from app import app, db
 from app.models import Users
-from flask import render_template, flash, redirect, request
+from flask import render_template, flash, redirect, request, url_for
 from app.forms import SignupForm, LoginForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, login_required, logout_user
 
 
 
@@ -38,13 +38,19 @@ def Login():
     
     if form.validate_on_submit():
         user = Users.query.filter_by(username=form.username_or_email.data).first()
-        if user is None or not Users.query.filter_by(userpassword=form.userpassword).first():
+        if user is None or not Users.query.filter_by(password=form.password.data).first():
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
 
     return render_template('login.html', title='Login', form=form)
         
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 
