@@ -1,0 +1,50 @@
+
+
+body{
+    margin:0;
+    height:100%;
+}
+
+
+#nav-bar ul{
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 5vh;
+    background-color: #3D3D3D;
+    overflow: hidden;
+    
+    
+}
+
+
+#title{
+    font-family: 'Raleway', sans-serif;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    margin-left: 2.5vw;
+    color: #36F1CD;
+    font-size: 2.25vh;
+    margin-top: 1.1vh;
+    
+    
+}
+
+#nav-ul li{
+    float: right;
+}
+
+#nav-ul li a{
+    font-size: 1.65vh;;
+    font-family: 'Raleway', sans-serif;
+    display:block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 5vw;
+    margin-top: 1.5vh;
+    
+}
