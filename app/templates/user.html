@@ -2,4 +2,25 @@
 
 <h1>User: {{ user.username }}</h1>
 
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+
+        {{ form.teacher_id.label}}
+        {{form.teacher_id(size=32)}}
+
+    </p>
+
+    <p>
+
+        {{ form.class_code.label }}
+        {{form.class_code(size=32)}}
+
+    </p>
+
+    <p>{{form.submit()}}</p>
+
+</form>
+
 {% endblock %}
