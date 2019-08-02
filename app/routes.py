@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Users
+from app.models import Users, Classs
 from flask import render_template, flash, redirect, request, url_for
 from app.forms import SignupForm, LoginForm, ClassForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
@@ -53,7 +53,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/user/<username>')
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
     #Only allow users to see their users page
@@ -63,8 +63,8 @@ def user(username):
 
         if form.validate_on_submit():
             thisClass = Classs();
-            Classs.teacherid = form.teacher_id.data;
-            Classs.classcode = form.class_code.data;
+            thisClass.teacherid = int(current_user.get_id());
+            thisClass.classcode = form.class_code.data;
 
             db.session.add(thisClass)
             db.session.commit()
