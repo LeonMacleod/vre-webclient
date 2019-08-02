@@ -19,6 +19,5 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log In')
 
 class ClassForm(FlaskForm):
-    teacher_id = StringField('id', validators=[DataRequired()])
     class_code = StringField('code', validators=[DataRequired()])
     submit = SubmitField('Create Class')
