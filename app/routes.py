@@ -60,6 +60,9 @@ def user(username):
     form = ClassForm();
     user = Users.query.filter_by(username=username).first_or_404()
     if(current_user.get_id() == user.get_id()):
+        
+
+        classs = Classs.query.filter_by(teacherid = 10).all()
 
         if form.validate_on_submit():
             thisClass = Classs();
@@ -69,7 +72,7 @@ def user(username):
             db.session.add(thisClass)
             db.session.commit()
 
-        return render_template('user.html', user=user, form=form)  
+        return render_template('user.html', user=user, form=form, classes=classs)  
     else:
 
         return render_template('index.html')

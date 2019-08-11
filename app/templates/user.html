@@ -22,4 +22,17 @@
 
 </form>
 
+
+
+<table>
+    <tbody>
+    {% for item in classes %}
+    <tr>
+        <td style="padding:0; margin:0"><p>Class Code:</p>{{item.classcode}}</td>
+        <td style="padding:0; margin:0"><p>Class ID:</p>{{item.classid}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
