@@ -62,7 +62,7 @@ def user(username):
     if(current_user.get_id() == user.get_id()):
         
 
-        classs = Classs.query.filter_by(teacherid = 10).all()
+        classs = Classs.query.filter_by(teacherid = int(current_user.get_id())).all()
 
         if form.validate_on_submit():
             thisClass = Classs();
@@ -76,13 +76,6 @@ def user(username):
     else:
 
         return render_template('index.html')
-
-    
-
-    
-
-
-
 
 
 @app.route('/index')
