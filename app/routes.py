@@ -58,6 +58,7 @@ def logout():
 def enrol():
 
     form = EnrolForm()
+    return render_template('enrolment.html', form=form)
 
 
 

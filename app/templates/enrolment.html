@@ -27,24 +27,20 @@
         <p>
             {{form.studentcode.label}}<br>
             {{form.studentcode(size=32)}}<br>
-            {% for error in studentcode.errors %}
+            {% for error in form.studentcode.errors %}
             <span style="color: red;">[{{error}}]</span>
             {% endfor %}
         </p>
 
         <p>
-            {{form.classid.label}}<br>
-            {{form.classid(size=32)}}<br>
-            {% for error in classid.errors %}
+            {{form.classcode.label}}<br>
+            {{form.classcode(size=32)}}<br>
+            {% for error in form.classcode.errors %}
             <span style="color: red;">[{{error}}]</span>
             {% endfor %}
         </p>
 
-
-
-
-        <p>{{form.remember_me()}} {{ form.remember_me.label }}</p>
         <p>{{ form.submit()}}</p>
 
-
+        {% endblock%}
     </form>
