@@ -1,7 +1,7 @@
 from app import app, db
 from app.models import Users, Classs
 from flask import render_template, flash, redirect, request, url_for
-from app.forms import SignupForm, LoginForm, ClassForm
+from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from flask_login import current_user, login_user, login_required, logout_user
 
