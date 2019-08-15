@@ -21,3 +21,12 @@ class LoginForm(FlaskForm):
 class ClassForm(FlaskForm):
     class_code = StringField('code', validators=[DataRequired()])
     submit = SubmitField('Create Class')
+
+
+class Enrolment(FlaskForm):
+    studentname = StringField('studentname', validators=[DataRequired()])
+    studentcode = StringField('studentcode', validators=[DataRequired()])
+    classid = StringField('classid', validators=[DataRequired()])
+    submit = SubmitField('Enrol')
+
+

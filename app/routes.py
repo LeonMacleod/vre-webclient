@@ -53,6 +53,15 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route("/enrol", methods=['GET', 'POST'])
+@login_required
+def enrol():
+
+    form = EnrolForm()
+
+
+
+
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
@@ -71,7 +80,7 @@ def user(username):
 
             db.session.add(thisClass)
             db.session.commit()
-
+        
         return render_template('user.html', user=user, form=form, classes=classs)  
     else:
 
