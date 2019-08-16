@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Users, Classs
+from app.models import Users, Classs, Students, Enrolment
 from flask import render_template, flash, redirect, request, url_for
 from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
@@ -58,6 +58,17 @@ def logout():
 def enrol():
 
     form = EnrolForm()
+
+    if form.validate_on_submit():
+        student = Students()
+        student.studentname = form.studentname.data;
+        student.studentcode = form.studentcode.data;
+
+        db.session.add(student)
+        db.session.commit()
+
+
+
     return render_template('enrolment.html', form=form)
 
 
