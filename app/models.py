@@ -32,7 +32,7 @@ class Classs(db.Model):
 class Enrolment(db.Model):
     eid = db.Column(db.Integer, primary_key=True)
     sid = db.Column(db.Integer, db.ForeignKey('students.studentid'))
-    cid = db.Column(db.Integer, db.ForeignKey('classs.clasid'))
+    cid = db.Column(db.Integer, db.ForeignKey('classs.classid'))
 
     def __repr__(self):
         return '<Student {}'.format(self.studentname)

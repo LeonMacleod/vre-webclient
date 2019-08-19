@@ -60,15 +60,23 @@ def enrol():
 
     if form.validate_on_submit():
         student = Students()
-        enrolment = Enrolment()
+        
         student.studentname = form.studentname.data;
         student.studentcode = form.studentcode.data;
 
+        
+
+        db.session.add(student)
+        db.session.commit()
+
+        enrolment = Enrolment()
+
         enrolment.sid = student.studentid;
         enrolment.cid = form.classcode.data;
-
-        db.session.add(student, enrolment)
+        
+        db.session.add(enrolment)
         db.session.commit()
+
 
 
     return render_template('enrolment.html', form=form)
