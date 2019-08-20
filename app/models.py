@@ -1,6 +1,13 @@
 from app import db, login
 from flask_login import UserMixin
 
+
+enrolment = db.Table(
+    'enrolment',
+    db.Column('sid', db.Integer, db.ForeignKey('students.studentid')),
+    db.Column('cid', db.Integer, db.ForeignKey('classs.classid')),
+    )
+
 class Users(UserMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.VARCHAR(255), unique=True)
@@ -16,7 +23,7 @@ class Students(db.Model):
     studentid = db.Column(db.Integer, primary_key=True)
     studentname = db.Column(db.VARCHAR(255), unique=True)
     studentcode = db.Column(db.VARCHAR(255), unique=True)
-    enrolments = db.Relationship()
+    classes = db.relationship('Classs', secondary = enrolment, backref='students')
     def __repr__(self):
         return '<Student {}'.format(self.studentname)
 
@@ -29,12 +36,7 @@ class Classs(db.Model):
     def __repr__(self):
         return '<Class {}'.format(self.classid)
 
-class Enrolment(db.Table):
-    sid = db.Column(db.Integer, db.ForeignKey('students.studentid'))
-    cid = db.Column(db.Integer, db.ForeignKey('classs.classid'))
 
-    def __repr__(self):
-        return '<Student {}'.format(self.studentname)
 
 
 @login.user_loader

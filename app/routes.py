@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Users, Classs, Students, Enrolment
+from app.models import Users, Classs, Students
 from flask import render_template, flash, redirect, request, url_for
 from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
@@ -64,18 +64,15 @@ def enrol():
         student.studentname = form.studentname.data;
         student.studentcode = form.studentcode.data;
 
-        
+        db.session.add(student)
+        db.session.commit()
+
+        student.classes.sid = student.studentid
+        student.classes.cid = form.classcode.data;
 
         db.session.add(student)
         db.session.commit()
 
-        enrolment = Enrolment()
-
-        enrolment.sid = student.studentid;
-        enrolment.cid = form.classcode.data;
-        
-        db.session.add(enrolment)
-        db.session.commit()
 
 
 
