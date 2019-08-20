@@ -16,7 +16,7 @@ class Students(db.Model):
     studentid = db.Column(db.Integer, primary_key=True)
     studentname = db.Column(db.VARCHAR(255), unique=True)
     studentcode = db.Column(db.VARCHAR(255), unique=True)
-
+    enrolments = db.Relationship()
     def __repr__(self):
         return '<Student {}'.format(self.studentname)
 
@@ -29,8 +29,7 @@ class Classs(db.Model):
     def __repr__(self):
         return '<Class {}'.format(self.classid)
 
-class Enrolment(db.Model):
-    eid = db.Column(db.Integer, primary_key=True)
+class Enrolment(db.Table):
     sid = db.Column(db.Integer, db.ForeignKey('students.studentid'))
     cid = db.Column(db.Integer, db.ForeignKey('classs.classid'))
 
