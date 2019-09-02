@@ -1,12 +1,15 @@
 from app import app, db
-from app.models import Users, Classs, Students
-from flask import render_template, flash, redirect, request, url_for
+from app.models import Users, Classs, Students, Enrolment
+from flask import render_template, flash, redirect, request, url_for, session
 from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from flask_login import current_user, login_user, login_required, logout_user
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
 
-
-
+engine = create_engine('sqlite:///:memory:', echo=True)
+Session = sessionmaker(bind = engine)
+session = Session()
 
 @app.route('/signup', methods=['GET', 'POST'])
 def Signup():
@@ -61,17 +64,24 @@ def enrol():
     if form.validate_on_submit():
         student = Students()
         
+
         student.studentname = form.studentname.data;
         student.studentcode = form.studentcode.data;
 
         db.session.add(student)
         db.session.commit()
 
-        student.classes.sid = student.studentid
-        student.classes.cid = form.classcode.data;
+        # creating enrolment
+        enrolment = Classs.query.filter_by(classcode = form.classcode.data).first()
+
+        student.classes.append(enrolment)
+        
+        #commiting enrolment
 
         db.session.add(student)
         db.session.commit()
+
+        print("got here")
 
 
 
@@ -91,6 +101,9 @@ def user(username):
         
 
         classs = Classs.query.filter_by(teacherid = int(current_user.get_id())).all()
+        testClass = Classs.query.filter_by(classcode = "jacob").first()
+        
+        print(testClass.students)
 
         if form.validate_on_submit():
             thisClass = Classs();
