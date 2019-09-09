@@ -35,4 +35,20 @@
     </tbody>
 </table>
 
+
+
+{% for i in dicts %}
+<tr>
+
+    <!--<td>{{i["students"][0].studentname}}</td>-->
+    {% for o in i["students"] %}
+
+        <td>{{o.studentname}}</td>
+    
+    {% endfor %}
+    
+
+</tr>
+{% endfor %}
+
 {% endblock %}

@@ -93,7 +93,7 @@ def StudentsInClass(classs):
 
     
     dict_structure = {
-        "classid": 0,
+        "classcode": "",
         "students": []
     }   
 
@@ -103,7 +103,7 @@ def StudentsInClass(classs):
 
     for i in range(class_length):
         newdict = dict_structure
-        newdict["classid"] = classs[i].classid
+        newdict["classcode"] = classs[i].classcode
         newdict["students"] = classs[i].students
         dicts.append(newdict)
     
@@ -126,13 +126,9 @@ def user(username):
 
         
         dicts = StudentsInClass(classs);
-        print(dicts[0]["students"][0])
-        
+        #print(dicts[0]["students"][0])
 
         
-
-
-
 
         print()
 
@@ -144,7 +140,7 @@ def user(username):
             db.session.add(thisClass)
             db.session.commit()
         
-        return render_template('user.html', user=user, form=form, classes=classs)  
+        return render_template('user.html', user=user, form=form, classes=classs, dicts=dicts)  
     else:
 
         return render_template('index.html')
