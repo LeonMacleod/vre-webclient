@@ -89,6 +89,27 @@ def enrol():
     return render_template('enrolment.html', form=form)
 
 
+def StudentsInClass(classs):
+
+    
+    dict_structure = {
+        "classid": 0,
+        "students": []
+    }   
+
+    class_length = len(classs);
+
+    dicts = []
+
+    for i in range(class_length):
+        newdict = dict_structure
+        newdict["classid"] = classs[i].classid
+        newdict["students"] = classs[i].students
+        dicts.append(newdict)
+    
+    return dicts;
+    
+
 
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
@@ -101,9 +122,19 @@ def user(username):
         
 
         classs = Classs.query.filter_by(teacherid = int(current_user.get_id())).all()
-        testClass = Classs.query.filter_by(classcode = "jacob").first()
+        #testClass = Classs.query.filter_by(classcode = "jacob").first()
+
         
-        print(testClass.students)
+        dicts = StudentsInClass(classs);
+        print(dicts[0]["students"][0])
+        
+
+        
+
+
+
+
+        print()
 
         if form.validate_on_submit():
             thisClass = Classs();
