@@ -1,5 +1,9 @@
 {% block content %}
 
+
+
+<link href="user.css" rel="stylesheet">
+
 <h1>User: {{ user.username }}</h1>
 
 
@@ -40,6 +44,7 @@
 {% for i in dicts %}
 <tr>
 
+    <td><h1>{{i.class}}</h1></td>
     <!--<td>{{i["students"][0].studentname}}</td>-->
     {% for o in i["students"] %}
 

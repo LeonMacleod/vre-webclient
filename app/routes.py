@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Users, Classs, Students, Enrolment
+from app.models import Users, Classs, Students, Enrolment, StudentData
 from flask import render_template, flash, redirect, request, url_for, session
 from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length

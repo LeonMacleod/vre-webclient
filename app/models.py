@@ -39,6 +39,23 @@ class Classs(db.Model):
     def __repr__(self):
         return '<Class {}'.format(self.classid)
 
+class StudentData(db.Model):
+    __tablename__ = 'studentdata'
+    dataid = db.Column(db.Integer, primary_key=True)
+    studentid = db.Column(db.Integer)
+    gameid = db.Column(db.Integer)
+    score = db.Column(db.Double)
+    areamost = db.Column(db.String)
+    arealeast = db.Column(db.String)
+    improvementrate = db.Column(db.Double)
+
+    def __repr__(self):
+        return '<Class {}'.format(self.classid)
+
+
+
+
+
 
 
 
