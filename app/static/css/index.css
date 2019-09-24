@@ -1,0 +1,7 @@
+body{
+    background-image: url("../images/pexels-photo-2781814.jpeg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

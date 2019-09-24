@@ -1,70 +1,88 @@
+{% extends "nav.html" %}
+
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="../static/css/tables.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway|Roboto&display=swap" rel="stylesheet">
 
-
-<link href="user.css" rel="stylesheet">
-
-<h1>User: {{ user.username }}</h1>
-
+<title>Welcome, {{ user.username }}</title>
+<h1>Hello {{ user.username }}</h1>
 
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
+
     <p>
-
         Create a Class
-
     </p>
-
+        
     <p>
 
         {{ form.class_code.label }}
-        {{form.class_code(size=32)}}
-
+        {{ form.class_code(size=32)}}
+        
     </p>
-
+        
     <p>{{form.submit()}}</p>
-
+        
 </form>
-
-
-
+        
 <table>
     <tbody>
-    {% for item in classes %}
-    <tr>
-        <td style="padding:0; margin:0"><p>Class Code:</p>{{item.classcode}}</td>
-        <td style="padding:0; margin:0"><p>Class ID:</p>{{item.classid}}</td>
-    </tr>
-    {% endfor %}
+
+        <tr>
+            <th>Class Code</th>
+
+            <th>Class ID</th>
+
+
+        </tr>
+
+        {% for item in classes %}
+        <tr>
+            <td style="padding:0; margin:0">{{item.classcode}}</td>
+            <td style="padding:0; margin:0">{{item.classid}}</td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
-
-
-
+        
+        
+        
 {% for i in studentdicts %}
 <tr>
-
+        
     <td><h1>{{i.class}}</h1></td>
-    <!--<td>{{i["students"][0].studentname}}</td>-->
+        <!--<td>{{i["students"][0].studentname}}</td>-->
     {% for o in i["students"] %}
-
+        
         <td>{{o.studentname}}</td>
-    
+            
     {% endfor %}
-    
-
+            
+        
 </tr>
 {% endfor %}
-
-
+        
+        
 {% for i in studentdatadicts %}
 <tr>
-
+        
     <td><h1>{{i.score}}</h1></td>
-    
-    
-
+            
+            
+        
 </tr>
 {% endfor %}
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+
+
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+
+  td{
+      color: white;
+  }
+  
+  th{
+      color: #3D3D3D;
+  }
+  
+  tr:nth-child(even){background-color: #3D3D3D}
+  
+  th {
+    background-color: #36F1CD;

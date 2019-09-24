@@ -1,10 +1,8 @@
-
-
 body{
     margin:0;
     height:100%;
+    background-color: #67AAF9;
 }
-
 
 #nav-bar ul{
     list-style-type:none;
