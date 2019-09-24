@@ -6,6 +6,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Le
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+import json
 
 engine = create_engine('sqlite:///:memory:', echo=True)
 Session = sessionmaker(bind = engine)
@@ -112,16 +113,6 @@ def StudentsInClass(classs):
 
 def StudentDataHelper(data):
 
-    dict_structure = {
-
-        "studentid": 0,
-        "gameid": 0,
-        "score": 0,
-        "areamost": "",
-        "arealeast": "",
-        "improvementrate": 0
-    }
-
     dicts_to_return = []
 
     for i in(data):
@@ -132,7 +123,8 @@ def StudentDataHelper(data):
             "score": 0,
             "areamost": "",
             "arealeast": "",
-            "improvementrate": 0
+            "improvementrate": 0,
+            "studentname": ""
         }
         this_dict["studentid"] = i.studentid
         this_dict["gameid"] = i.gameid
@@ -140,8 +132,8 @@ def StudentDataHelper(data):
         this_dict["areamost"] = i.areamost
         this_dict["arealeast"] = i.arealeast
         this_dict["improvementrate"] = i.improvementrate
+        this_dict["studentname"] = i.studentname
         dicts_to_return.append(this_dict)
-        print(dicts_to_return)
     return dicts_to_return
 
         
@@ -177,10 +169,14 @@ def user(username):
 
 
         #print(studentsdata[1][0].studentid)
+
     
         print(studentsdata[0].studentid)
         
         studentdatadicts = StudentDataHelper(studentsdata);
+
+
+        print(json.dumps(studentdatadicts))
 
         #print(studentdatadicts)
 
@@ -188,6 +184,9 @@ def user(username):
 
         
         studentdicts = StudentsInClass(classs);
+
+        
+        print(studentdicts[0]["students"][1].studentname)
 
         #print(dicts[0]["students"][0])
 
