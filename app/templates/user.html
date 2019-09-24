@@ -41,7 +41,7 @@
 
 
 
-{% for i in dicts %}
+{% for i in studentdicts %}
 <tr>
 
     <td><h1>{{i.class}}</h1></td>
@@ -51,6 +51,17 @@
         <td>{{o.studentname}}</td>
     
     {% endfor %}
+    
+
+</tr>
+{% endfor %}
+
+
+{% for i in studentdatadicts %}
+<tr>
+
+    <td><h1>{{i.score}}</h1></td>
+    
     
 
 </tr>

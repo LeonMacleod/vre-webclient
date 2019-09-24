@@ -44,13 +44,13 @@ class StudentData(db.Model):
     dataid = db.Column(db.Integer, primary_key=True)
     studentid = db.Column(db.Integer)
     gameid = db.Column(db.Integer)
-    score = db.Column(db.Double)
+    score = db.Column(db.Integer)
     areamost = db.Column(db.String)
     arealeast = db.Column(db.String)
-    improvementrate = db.Column(db.Double)
+    improvementrate = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<Class {}'.format(self.classid)
+        return '<Class {}'.format(self.dataid)
 
 
 

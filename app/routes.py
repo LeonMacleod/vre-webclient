@@ -110,6 +110,45 @@ def StudentsInClass(classs):
     return dicts;
     
 
+def StudentDataHelper(data):
+
+    dict_structure = {
+
+        "studentid": 0,
+        "gameid": 0,
+        "score": 0,
+        "areamost": "",
+        "arealeast": "",
+        "improvementrate": 0
+    }
+
+    dicts_to_return = []
+
+    for i in(data):
+        print("appendign at " + str(i.studentid))
+        this_dict =  {
+            "studentid": 0,
+            "gameid": 0,
+            "score": 0,
+            "areamost": "",
+            "arealeast": "",
+            "improvementrate": 0
+        }
+        this_dict["studentid"] = i.studentid
+        this_dict["gameid"] = i.gameid
+        this_dict["score"] = i.score
+        this_dict["areamost"] = i.areamost
+        this_dict["arealeast"] = i.arealeast
+        this_dict["improvementrate"] = i.improvementrate
+        dicts_to_return.append(this_dict)
+        print(dicts_to_return)
+    return dicts_to_return
+
+        
+
+
+
+
 
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
@@ -122,15 +161,38 @@ def user(username):
         
 
         classs = Classs.query.filter_by(teacherid = int(current_user.get_id())).all()
+        studentsinclass = []
+        for i in range(len(classs)):
+            studentsinclass.append(classs[i].students)
+
+        
+        print(studentsinclass[0][1].studentid)
+
+        studentsdata = []
+
+        
+        for i in range(0, len(studentsinclass[0])):
+            print("appended " + str(i))
+            studentsdata.append(StudentData.query.filter_by(studentid = studentsinclass[0][i].studentid).first())
+
+
+        #print(studentsdata[1][0].studentid)
+    
+        print(studentsdata[0].studentid)
+        
+        studentdatadicts = StudentDataHelper(studentsdata);
+
+        #print(studentdatadicts)
+
         #testClass = Classs.query.filter_by(classcode = "jacob").first()
 
         
-        dicts = StudentsInClass(classs);
+        studentdicts = StudentsInClass(classs);
+
         #print(dicts[0]["students"][0])
 
         
 
-        print()
 
         if form.validate_on_submit():
             thisClass = Classs();
@@ -140,7 +202,7 @@ def user(username):
             db.session.add(thisClass)
             db.session.commit()
         
-        return render_template('user.html', user=user, form=form, classes=classs, dicts=dicts)  
+        return render_template('user.html', user=user, form=form, classes=classs, studentdicts=studentdicts, studentdatadicts = studentdatadicts)  
     else:
 
         return render_template('index.html')
