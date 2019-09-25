@@ -102,7 +102,7 @@
                 <script>
                     console.log("test")
                     //Student data, taken from flask.
-                    var studentData = [{"arealeast": "multiplication", "gameid": 1, "improvementrate": 25, "score": 120, "classid": 30, "areamost": "fractions", "studentid": 38, "studentname": "george"}, {"arealeast": "subtraction", "gameid": 1, "improvementrate": 35, "score": 100, "classid": 30, "areamost": "fractions", "studentid": 39, "studentname": "Mason"}, {"arealeast": "fractions", "gameid": 1, "improvementrate": 11, "score": 98, "classid": 30, "areamost": "multiplication", "studentid": 40, "studentname": "benry"}, {"arealeast": "spelling", "gameid": 2, "improvementrate": 8, "score": 58, "classid": 32, "areamost": "grammar", "studentid": 41, "studentname": "trent"}, {"arealeast": "spelling", "gameid": 2, "improvementrate": 25, "score": 100, "classid": 32, "areamost": "grammar", "studentid": 42, "studentname": "jacob"}, {"arealeast": "grammar", "gameid": 2, "improvementrate": 55, "score": 130, "classid": 32, "areamost": "spelling", "studentid": 43, "studentname": "meg"}, {"arealeast": "grammar", "gameid": 2, "improvementrate": 33, "score": 98, "classid": 32, "areamost": "spelling", "studentid": 44, "studentname": "tane"}]
+                    var studentData = {{json_for_graphs|tojson|safe}};
                     //Student data, taken from flask.
 
                     // Gets a specific piece of student data from the python dictionary parsed to JSON

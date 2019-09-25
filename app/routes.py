@@ -170,7 +170,6 @@ def user(username):
             #getting all students in this users class.
             studentsinclass.append(classs[i].students)
 
-        # PRINT ABOVE YIELDS ALL STUDENT NAMES, DYNAMIC SHOULD BE ABLE TO WORK FROM HERE
 
         studentdatapackets = []
 
@@ -222,7 +221,9 @@ def user(username):
         print(json.dumps(studentdatadicts))
 
         #data parsed to javascript script
-        json_for_graphs = json.dumps(studentdatadicts)
+        json_for_graphs = studentdatadicts
+        
+        #json.dumps(studentdatadicts)
 
         #print(studentdatadicts)
 
