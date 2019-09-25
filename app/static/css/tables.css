@@ -1,7 +1,9 @@
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 75%;
     font-family: 'Raleway', sans-serif;
+    margin-right: 12.5%;
+    margin-left: 12.5%;
 
 
   }
@@ -14,12 +16,12 @@ table {
   td{
       color: white;
   }
-  
   th{
       color: #3D3D3D;
   }
   
   tr:nth-child(even){background-color: #3D3D3D}
+  tr:nth-child(odd){background-color: #3D3D3D}
   
   th {
     background-color: #36F1CD;

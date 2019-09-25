@@ -41,6 +41,7 @@ def Login():
         return redirect(url_for('user', username=current_user.username))
     
     if form.validate_on_submit():
+        print("got here")
         user = Users.query.filter_by(username=form.username_or_email.data).first()
         if user is None or not Users.query.filter_by(password=form.password.data).first():
             return redirect(url_for('index'))
@@ -158,12 +159,12 @@ def user(username):
             studentsinclass.append(classs[i].students)
 
         
-        print(studentsinclass[0][1].studentid)
 
         studentsdata = []
 
         
         for i in range(0, len(studentsinclass[0])):
+
             print("appended " + str(i))
             studentsdata.append(StudentData.query.filter_by(studentid = studentsinclass[0][i].studentid).first())
 
@@ -171,8 +172,8 @@ def user(username):
         #print(studentsdata[1][0].studentid)
 
     
-        print(studentsdata[0].studentid)
-        
+        print(len(studentsdata))
+        print("STUDENTDATA LINE ABOVE")
         studentdatadicts = StudentDataHelper(studentsdata);
 
 
@@ -186,7 +187,7 @@ def user(username):
         studentdicts = StudentsInClass(classs);
 
         
-        print(studentdicts[0]["students"][1].studentname)
+
 
         #print(dicts[0]["students"][0])
 

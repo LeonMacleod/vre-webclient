@@ -1,46 +1,68 @@
-<html>
-    <head>
-        <title>VR EDUCATUM</title>
-
-    </head>
 
 
-    <body>
-        <h1>Welcome to VR EDUCATUM, ENROL BELOW</h1>
-    </body>
+
+{% extends "nav.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="../static/css/forms.css">
+     
+<title>VR EDUCATUM</title>
+
+<div id="form-container" style="height: 50vh;">
 
 
-    {% block content %}
+    <div id="form-header">
+        <p>Enrol in a game</p>
+    </div>
 
 
-    <h1>Enrol</h1>
+
+    
+
+
     <form action="" method="post" novalidate>
         {{form.hidden_tag() }}
+
+
+        <p id="form-sub-header">           
+                Students name
+        </p>
+        
+        {{form.studentname(size=32)}}
+
         <p>
-            {{ form.studentname.label }}<br>
-            {{form.studentname(size=32)}}<br>
             {% for error in form.studentname.errors %}
             <span style="color: red;">[{{error}}]</span>
             {% endfor %}
         </p>
 
+        <p id="form-sub-header">           
+            Sudents passcode (e.g. 4 digit number)
+        </p>
+
+        
+        {{form.studentcode(size=32)}}
         <p>
-            {{form.studentcode.label}}<br>
-            {{form.studentcode(size=32)}}<br>
             {% for error in form.studentcode.errors %}
             <span style="color: red;">[{{error}}]</span>
             {% endfor %}
         </p>
 
+        <p id="form-sub-header">           
+            Class code (provided by teacher) for game to enrol in.
+        </p>
+
+
+        {{form.classcode(size=32)}}
         <p>
-            {{form.classcode.label}}<br>
-            {{form.classcode(size=32)}}<br>
             {% for error in form.classcode.errors %}
             <span style="color: red;">[{{error}}]</span>
             {% endfor %}
         </p>
 
-        <p>{{ form.submit()}}</p>
+        <p>{{ form.submit(class_="form-submit")}}</p>
 
         {% endblock%}
     </form>
+</div>
