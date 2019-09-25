@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 
 
@@ -25,7 +25,7 @@ class ClassForm(FlaskForm):
 
 class EnrolForm(FlaskForm):
     studentname = StringField('studentname', validators=[DataRequired()])
-    studentcode = StringField('studentcode', validators=[DataRequired()])
+    studentcode = IntegerField('studentcode', validators=[DataRequired()])
     classcode = StringField('classcode', validators=[DataRequired()])
     submit = SubmitField('Enrol')
 

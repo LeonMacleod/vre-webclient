@@ -1,5 +1,6 @@
 from app import db, login
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Enrolment(db.Model):
@@ -19,6 +20,7 @@ class Users(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
     def get_id(self):
            return (self.uid)
+        
 
 class Students(db.Model):
     __tablename__ = 'students'
@@ -34,7 +36,7 @@ class Classs(db.Model):
     __tablename__ = 'classs'
     classid = db.Column(db.Integer, primary_key=True)
     teacherid = db.Column(db.Integer)
-    classcode = db.Column(db.VARCHAR(255))
+    classcode = db.Column(db.VARCHAR(255), unique=True)
     
     def __repr__(self):
         return '<Class {}'.format(self.classid)

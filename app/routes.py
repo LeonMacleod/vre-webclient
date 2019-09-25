@@ -83,6 +83,10 @@ def enrol():
         student.studentname = form.studentname.data;
         student.studentcode = form.studentcode.data;
 
+        classcode = Classs.query.filter_by(classcode = form.classcode.data).first()
+        if classcode is None:
+            return redirect(url_for('enrol'))
+
         #adding and commiting to the session.
         db.session.add(student)
         db.session.commit()
@@ -107,7 +111,7 @@ def StudentDataHelper(data):
     dicts_to_return = []
 
     for i in(data):
-        print("appendign at " + str(i.studentid))
+        #identical structure to StudentData database table
         this_dict =  {
             "studentid": 0,
             "gameid": 0,
@@ -118,6 +122,7 @@ def StudentDataHelper(data):
             "studentname": "",
             "classid" : 0
         }
+        #mapping each value from the StudentData table to the python dictionary
         this_dict["studentid"] = i.studentid
         this_dict["gameid"] = i.gameid
         this_dict["score"] = i.score
@@ -148,11 +153,9 @@ def user(username):
             #getting all students in this users class.
             studentsinclass.append(classs[i].students)
 
-
+        #main list holding all to be created data packets
         studentdatapackets = []
 
-        print(studentsinclass)
-        print(len(studentsinclass))
 
         # take below, returns the 0th class's 0th students id.
         #print(studentsinclass[0][0].studentid)
@@ -162,61 +165,27 @@ def user(username):
         #looping through the number of class objects containing students.
         for i in range(len(studentsinclass)):
             for o in range(len(studentsinclass[i])):
-                #print("iteration " + str(o))
+                # identifiying information to be parsed to the graphing process.
                 studentdatapacket = StudentData.query.filter_by(studentid=studentsinclass[i][o].studentid).first()
                 studentdatapackets.append(studentdatapacket)
-                #print(studentdatapacket)
-            
-        print(studentdatapackets[2].studentid)
 
-
-
-        """
-        for i in range(0, len(studentsinclass)):
-            studentsdata = []
-            for o in range(0, len(studentsinclass[i])):
-                studentsdata.append(StudentData.query.filter_by(studentid = studentsinclass[i][o].studentid).first())
-            
-            studentsdatapackets.append(studentsdata)
-        
-        print(studentsdatapackets)
-        print(studentsdatapackets[1][0].studentid)
-        """
-
-
-
-            
-            
-
-        #print(studentsdata[1][0].studentid)
-
-    
-   
-        print("STUDENTDATA LINE ABOVE")
+        #Sending this information to the helper function to return the mapped dictionary
         studentdatadicts = StudentDataHelper(studentdatapackets);
 
-
-        print(json.dumps(studentdatadicts))
-
-        #json data for graphs (this in its current state isn't actually JSON but is converted into it at the jinja2 end.)
+        #json data for graphs (this in its current state isn't actually JSON but is converted into it at the jinja2 end.) (MAPPED DICTIONARY MENTIONED ABOVE)
         json_for_graphs = studentdatadicts
- 
 
 
-
-        
-
-
-        #print(dicts[0]["students"][0])
-
-        
-
-
+        # If the create a class button is clicked
         if form.validate_on_submit():
+            #Creating an instance of the class
             thisClass = Classs();
+            # The teacherid of the class being created by the user(teacher) is their id.
             thisClass.teacherid = int(current_user.get_id());
+            # The classcode is set as specified
             thisClass.classcode = form.class_code.data;
 
+            #adding and commiting to the database
             db.session.add(thisClass)
             db.session.commit()
         
@@ -225,7 +194,7 @@ def user(username):
 
         return render_template('index.html')
 
-
+#Index route, simply returns the index html.
 @app.route('/index')
 def index():
     return render_template('index.html')
