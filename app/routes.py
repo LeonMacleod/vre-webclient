@@ -137,7 +137,8 @@ def StudentDataHelper(data):
             "areamost": "",
             "arealeast": "",
             "improvementrate": 0,
-            "studentname": ""
+            "studentname": "",
+            "classid" : 0
         }
         this_dict["studentid"] = i.studentid
         this_dict["gameid"] = i.gameid
@@ -146,6 +147,7 @@ def StudentDataHelper(data):
         this_dict["arealeast"] = i.arealeast
         this_dict["improvementrate"] = i.improvementrate
         this_dict["studentname"] = i.studentname
+        this_dict["classid"] = i.classid
         dicts_to_return.append(this_dict)
     return dicts_to_return
 
@@ -167,25 +169,54 @@ def user(username):
         for i in range(len(classs)):
             #getting all students in this users class.
             studentsinclass.append(classs[i].students)
-            print(classs[i].students)
 
         # PRINT ABOVE YIELDS ALL STUDENT NAMES, DYNAMIC SHOULD BE ABLE TO WORK FROM HERE
 
-        studentsdata = []
+        studentdatapackets = []
+
+        print(studentsinclass)
+        print(len(studentsinclass))
+
+        # take below, returns the 0th class's 0th students id.
+        #print(studentsinclass[0][0].studentid)
 
         
-        for i in range(0, len(studentsinclass[0])):
 
-            print("appended " + str(i))
-            studentsdata.append(StudentData.query.filter_by(studentid = studentsinclass[0][i].studentid).first())
+        #looping through the number of class objects containing students.
+        for i in range(len(studentsinclass)):
+            for o in range(len(studentsinclass[i])):
+                #print("iteration " + str(o))
+                studentdatapacket = StudentData.query.filter_by(studentid=studentsinclass[i][o].studentid).first()
+                studentdatapackets.append(studentdatapacket)
+                #print(studentdatapacket)
+            
+        print(studentdatapackets[2].studentid)
 
+
+
+        """
+        for i in range(0, len(studentsinclass)):
+            studentsdata = []
+            for o in range(0, len(studentsinclass[i])):
+                studentsdata.append(StudentData.query.filter_by(studentid = studentsinclass[i][o].studentid).first())
+            
+            studentsdatapackets.append(studentsdata)
+        
+        print(studentsdatapackets)
+        print(studentsdatapackets[1][0].studentid)
+        """
+
+
+
+            
+            
 
         #print(studentsdata[1][0].studentid)
 
     
-        print(studentsdata[2].studentid)
+   
         print("STUDENTDATA LINE ABOVE")
-        studentdatadicts = StudentDataHelper(studentsdata);
+        studentdatadicts = StudentDataHelper(studentdatapackets);
 
 
         print(json.dumps(studentdatadicts))

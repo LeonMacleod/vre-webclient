@@ -87,39 +87,52 @@
             </td>
             <td style="padding:0; margin:0">
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+
+                <div style="border: 1px solid white; height: 100%; width: 100%; padding:0; margin:0;box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;">
+                    
+                    <canvas style="padding:0; margin:0;" id="studentScores{{item.classid}}" width="400" height="500"></canvas>
+                    <canvas style="padding:0; margin:0;" id="studentImprovementRates{{item.classid}}" width="400" height="500"></canvas>
+                
+                
+                </div>
+
+
                 <script>
                     console.log("test")
                     //Student data, taken from flask.
-                    var studentData = [{"score": 120, "studentid": 38, "arealeast": "multiplication", "improvementrate": 25, "studentname": "george", "areamost": "fractions", "gameid": 1}, {"score": 100, "studentid": 39, "arealeast": "subtraction", "improvementrate": 35, "studentname": "Mason", "areamost": "fractions", "gameid": 1}, {"score": 98, "studentid": 40, "arealeast": "fractions", "improvementrate": 11, "studentname": "benry", "areamost": "multiplication", "gameid": 1}]
+                    var studentData = [{"arealeast": "multiplication", "gameid": 1, "improvementrate": 25, "score": 120, "classid": 30, "areamost": "fractions", "studentid": 38, "studentname": "george"}, {"arealeast": "subtraction", "gameid": 1, "improvementrate": 35, "score": 100, "classid": 30, "areamost": "fractions", "studentid": 39, "studentname": "Mason"}, {"arealeast": "fractions", "gameid": 1, "improvementrate": 11, "score": 98, "classid": 30, "areamost": "multiplication", "studentid": 40, "studentname": "benry"}, {"arealeast": "spelling", "gameid": 2, "improvementrate": 8, "score": 58, "classid": 32, "areamost": "grammar", "studentid": 41, "studentname": "trent"}, {"arealeast": "spelling", "gameid": 2, "improvementrate": 25, "score": 100, "classid": 32, "areamost": "grammar", "studentid": 42, "studentname": "jacob"}, {"arealeast": "grammar", "gameid": 2, "improvementrate": 55, "score": 130, "classid": 32, "areamost": "spelling", "studentid": 43, "studentname": "meg"}, {"arealeast": "grammar", "gameid": 2, "improvementrate": 33, "score": 98, "classid": 32, "areamost": "spelling", "studentid": 44, "studentname": "tane"}]
+                    //Student data, taken from flask.
 
                     // Gets a specific piece of student data from the python dictionary parsed to JSON
-                    // takes the property string as a parameter, returns all student data pieces of this property
+                    // takes the propertys string and classid and returns all student data pieces of this property that are of the //class id specified
                     // e.g. if "score" is supplied the scores of all students under the parsed data will be returned in a list.
-                    function getSpecificDataPiece(stringProperty){
-                    
-                    var listToReturn = []
-                    for (i = 0; i < studentData.length; i++) {
-                        
-                        listToReturn.push(studentData[i][stringProperty])
+                    function getSpecificDataPiece(stringProperty, classid){
+  
+                        var listToReturn = []
+                        for (i = 0; i < studentData.length; i++) {
+                            if(studentData[i]["classid"] == classid){
+                                listToReturn.push(studentData[i][stringProperty])
+                            }
+    
+                        }
+                        return listToReturn
                     }
-                    
-                    return listToReturn
-                    
-                    }
 
 
 
-                    var studentScoresCTX = document.getElementById("studentScores").getContext('2d');
-                    var studentImprovementRatesCTX = document.getElementById("studentImprovementRates").getContext('2d');
+                    var studentScoresCTX = document.getElementById("studentScores{{item.classid}}").getContext('2d');
+                    var studentImprovementRatesCTX = document.getElementById("studentImprovementRates{{item.classid}}").getContext('2d');
                 
                     // Chart.js function, properties as labelled. Used to show the studentScores.
                     var studentScores = new Chart(studentScoresCTX, {
                         type: 'bar',
                         data: {
-                            labels: getSpecificDataPiece("studentname") ,
+                            labels: getSpecificDataPiece("studentname", {{item.classid}}) ,
                             datasets: [{
                                 label: 'Student Scores',
-                                data: getSpecificDataPiece("score"),
+                                data: getSpecificDataPiece("score", {{item.classid}}),
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
                                     'rgba(54, 162, 235, 0.2)',
@@ -150,10 +163,10 @@
                     var studentImprovementRates = new Chart(studentImprovementRatesCTX, {
                         type: 'bar',
                         data: {
-                            labels: getSpecificDataPiece("studentname") ,
+                            labels: getSpecificDataPiece("studentname", {{item.classid}}) ,
                             datasets: [{
                                 label: 'Student Improvement Rates',
-                                data: getSpecificDataPiece("improvementrate"),
+                                data: getSpecificDataPiece("improvementrate", {{item.classid}}),
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
                                     'rgba(54, 162, 235, 0.2)',
@@ -188,15 +201,7 @@
                 
                 </script>
 
-                <div style="border: 1px solid white; height: 100%; width: 100%; padding:0; margin:0;box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;">
-                    
-                    <canvas style="padding:0; margin:0;" id="studentScores" width="400" height="500"></canvas>
-                    <canvas style="padding:0; margin:0;" id="studentImprovementRates" width="400" height="500"></canvas>
                 
-                
-                </div>
                 
             </td>
         </tr>

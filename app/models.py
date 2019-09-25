@@ -49,6 +49,7 @@ class StudentData(db.Model):
     arealeast = db.Column(db.String)
     improvementrate = db.Column(db.Integer)
     studentname = db.Column(db.String)
+    classid = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Class {}'.format(self.dataid)
