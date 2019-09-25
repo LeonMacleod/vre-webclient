@@ -57,8 +57,34 @@
 
         {% for item in classes %}
         <tr>
-            <td style="padding:0; margin:0">{{item.classcode}}</td>
-            <td style="padding:0; margin:0">{{item.classid}}</td>
+            <td style="padding:0; margin:0">
+                
+                <div style="border: 1px solid white; height: 100%; box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;">
+
+                    {{item.classcode}}
+
+                </div>
+                
+            
+            
+            </td>
+            <td style="padding:0; margin:0">
+                
+
+                <div style="border: 1px solid white; height: 100%; margin:0; padding:0; box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;">
+
+                    {{item.classid}}
+    
+                </div>
+                
+                
+            
+            
+            </td>
             <td style="padding:0; margin:0">
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
                 <script>
@@ -92,7 +118,7 @@
                         data: {
                             labels: getSpecificDataPiece("studentname") ,
                             datasets: [{
-                                label: 'Score',
+                                label: 'Student Scores',
                                 data: getSpecificDataPiece("score"),
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
@@ -126,7 +152,7 @@
                         data: {
                             labels: getSpecificDataPiece("studentname") ,
                             datasets: [{
-                                label: 'Improvement Rate',
+                                label: 'Student Improvement Rates',
                                 data: getSpecificDataPiece("improvementrate"),
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
@@ -162,10 +188,15 @@
                 
                 </script>
 
-                <div style="border: 1px solid white;"><canvas id="studentScores" width="500" height="450"></canvas></div>
+                <div style="border: 1px solid white; height: 100%; width: 100%; padding:0; margin:0;box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;">
+                    
+                    <canvas style="padding:0; margin:0;" id="studentScores" width="400" height="500"></canvas>
+                    <canvas style="padding:0; margin:0;" id="studentImprovementRates" width="400" height="500"></canvas>
                 
-                <br>
-                <div style="border: 1px solid white;"><canvas id="studentImprovementRates" width="500" height="450"></canvas></div>
+                
+                </div>
                 
             </td>
         </tr>
@@ -173,42 +204,6 @@
     </tbody>
 </table>
         
-        
-
-<!--
-
-
-
-
-
-    
-
-{% for i in studentdicts %}
-<tr>
-        
-    <td><h1>{{i.class}}</h1></td>
-    {% for o in i["students"] %}
-        
-        <td>{{o.studentname}}</td>
-            
-    {% endfor %}
-            
-        
-</tr>
-{% endfor %}
-
--->
-        
-        
-{% for i in studentdatadicts %}
-<tr>
-        
-    <td><h1>{{i.score}}</h1></td>
-            
-            
-        
-</tr>
-{% endfor %}
 
 {% endblock %}
 

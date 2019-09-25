@@ -10,11 +10,13 @@ table {
   
   th, td {
     text-align: left;
-    padding: 8px;
+    
   }
 
   td{
       color: white;
+      height: 75vh;
+      
   }
   th{
       color: #3D3D3D;
