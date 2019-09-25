@@ -99,28 +99,6 @@ def enrol():
     # on return the enrolment.html template is rendered and the form is parsed.
     return render_template('enrolment.html', form=form)
 
-# Helper function for the user route, helps generate tables of classes directly
-def StudentsInClass(classs):
-
-    
-    dict_structure = {
-        "classcode": "",
-        "students": []
-    }   
-
-    class_length = len(classs);
-
-    dicts = []
-
-    for i in range(class_length):
-        newdict = dict_structure
-        newdict["classcode"] = classs[i].classcode
-        newdict["students"] = classs[i].students
-        dicts.append(newdict)
-    
-    return dicts;
-    
-
 # Helper function for the user route, helps with with converting
 # database data to python dictionaries to JSON strings to then have graphed data provided
 # to the user.
@@ -220,17 +198,11 @@ def user(username):
 
         print(json.dumps(studentdatadicts))
 
-        #data parsed to javascript script
+        #json data for graphs (this in its current state isn't actually JSON but is converted into it at the jinja2 end.)
         json_for_graphs = studentdatadicts
-        
-        #json.dumps(studentdatadicts)
+ 
 
-        #print(studentdatadicts)
 
-        #testClass = Classs.query.filter_by(classcode = "jacob").first()
-
-        
-        studentdicts = StudentsInClass(classs);
 
         
 
@@ -248,7 +220,7 @@ def user(username):
             db.session.add(thisClass)
             db.session.commit()
         
-        return render_template('user.html', user=user, form=form, classes=classs, studentdicts=studentdicts, studentdatadicts = studentdatadicts, json_for_graphs=json_for_graphs)  
+        return render_template('user.html', user=user, form=form, classes=classs, studentdatadicts = studentdatadicts, json_for_graphs=json_for_graphs)  
     else:
 
         return render_template('index.html')
