@@ -8,89 +8,98 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 import json
 
-engine = create_engine('sqlite:///:memory:', echo=True)
-Session = sessionmaker(bind = engine)
-session = Session()
-
+#Route that handles page signup
 @app.route('/signup', methods=['GET', 'POST'])
 def Signup():
+
+    # getting the WTFORM from the forms.py file.
     form = SignupForm()
 
+    # Listening for form validation (what happens if someone clicks the submit button)
     if form.validate_on_submit():
 
+        #creating a user instance
         user = Users()
+        # setting its attributes from the form data.
         user.username = form.username.data;
         user.password = form.password.data;
         user.useremail = form.email.data;
 
+        # adding and commiting the data to the database.
         db.session.add(user)
         db.session.commit()
         
-
+        #feedback through flash
         flash('Login requested for user{}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect('/login')
+    # rendering the template 'signup.html' on return parsing the variables title and form.
     return render_template('signup.html', title='Sign Up', form=form)
 
 
-
+#Route that handles page login
 @app.route('/login', methods=['GET', 'POST'])
 def Login():
+    # getting the WTFORM from the forms.py file.
     form = LoginForm()
 
+    # if the user is already logged in we don't want them attempting to login again so they are redirected.
     if current_user.is_authenticated:
         return redirect(url_for('user', username=current_user.username))
     
+    # if the login button is clicked.
     if form.validate_on_submit():
-        print("got here")
+        # attempting to get a user in the database with the same username as that provided in the form
         user = Users.query.filter_by(username=form.username_or_email.data).first()
+        #if this username provided does not correlate to a row in the database the user will be redirected.
         if user is None or not Users.query.filter_by(password=form.password.data).first():
-            return redirect(url_for('index'))
+            return redirect(url_for('Login'))
+        #if this username provided does correlate to a row in the database the user is logged in and redirected to their user page.
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('user', username=current_user.username))
-
+    # rendering the template 'login.html' on return parsing the variables Login and form.
     return render_template('login.html', title='Login', form=form)
         
-
+# A simple route to logout the user.
 @app.route("/logout", methods=['GET', 'POST'])
 @login_required
 def logout():
+    #logs out the user
     logout_user()
+    #redirects the user to the homepage
     return redirect(url_for('index'))
 
-
+# The route for enrolment
 @app.route("/enrol", methods=['GET', 'POST'])
 def enrol():
-
+    # Collecting the form from forms.py
     form = EnrolForm()
 
+    # if the submit enrolment button is pressed
     if form.validate_on_submit():
+        #creating a student instance
         student = Students()
         
-
+        # setting the attributes of this instance to those specified in the form
         student.studentname = form.studentname.data;
         student.studentcode = form.studentcode.data;
 
+        #adding and commiting to the session.
         db.session.add(student)
         db.session.commit()
 
         # creating enrolment
         enrolment = Classs.query.filter_by(classcode = form.classcode.data).first()
 
+        # Creating the intermediate table between students and classes (enrolment) using the previously defined student instance (on enrolment)
         student.classes.append(enrolment)
         
-        #commiting enrolment
-
+        # adding and commiting enrolment
         db.session.add(student)
         db.session.commit()
-
-        print("got here")
-
-
-
-
+    # on return the enrolment.html template is rendered and the form is parsed.
     return render_template('enrolment.html', form=form)
 
-
+# Helper function for the user route, helps generate tables of classes directly
 def StudentsInClass(classs):
 
     
@@ -112,6 +121,9 @@ def StudentsInClass(classs):
     return dicts;
     
 
+# Helper function for the user route, helps with with converting
+# database data to python dictionaries to JSON strings to then have graphed data provided
+# to the user.
 def StudentDataHelper(data):
 
     dicts_to_return = []
@@ -137,28 +149,27 @@ def StudentDataHelper(data):
         dicts_to_return.append(this_dict)
     return dicts_to_return
 
-        
-
-
-
-
-
-
+# Route handling the users page
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
-    #Only allow users to see their users page
+    #Collecting form.
     form = ClassForm();
+    
+    #If the correct user is on this page the page will function as follows
+    #If not the user will be redirected through render template to "index.html"
     user = Users.query.filter_by(username=username).first_or_404()
     if(current_user.get_id() == user.get_id()):
         
-
+        # getting the classs data of the user (teacher) with the id of the current user(teacher)
         classs = Classs.query.filter_by(teacherid = int(current_user.get_id())).all()
         studentsinclass = []
         for i in range(len(classs)):
+            #getting all students in this users class.
             studentsinclass.append(classs[i].students)
+            print(classs[i].students)
 
-        
+        # PRINT ABOVE YIELDS ALL STUDENT NAMES, DYNAMIC SHOULD BE ABLE TO WORK FROM HERE
 
         studentsdata = []
 
