@@ -50,6 +50,8 @@
 
             <th>Class ID</th>
 
+            <th>Data</th>
+
 
         </tr>
 
@@ -57,6 +59,115 @@
         <tr>
             <td style="padding:0; margin:0">{{item.classcode}}</td>
             <td style="padding:0; margin:0">{{item.classid}}</td>
+            <td style="padding:0; margin:0">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+                <script>
+                    console.log("test")
+                    //Student data, taken from flask.
+                    var studentData = [{"score": 120, "studentid": 38, "arealeast": "multiplication", "improvementrate": 25, "studentname": "george", "areamost": "fractions", "gameid": 1}, {"score": 100, "studentid": 39, "arealeast": "subtraction", "improvementrate": 35, "studentname": "Mason", "areamost": "fractions", "gameid": 1}, {"score": 98, "studentid": 40, "arealeast": "fractions", "improvementrate": 11, "studentname": "benry", "areamost": "multiplication", "gameid": 1}]
+
+                    // Gets a specific piece of student data from the python dictionary parsed to JSON
+                    // takes the property string as a parameter, returns all student data pieces of this property
+                    // e.g. if "score" is supplied the scores of all students under the parsed data will be returned in a list.
+                    function getSpecificDataPiece(stringProperty){
+                    
+                    var listToReturn = []
+                    for (i = 0; i < studentData.length; i++) {
+                        
+                        listToReturn.push(studentData[i][stringProperty])
+                    }
+                    
+                    return listToReturn
+                    
+                    }
+
+
+
+                    var studentScoresCTX = document.getElementById("studentScores").getContext('2d');
+                    var studentImprovementRatesCTX = document.getElementById("studentImprovementRates").getContext('2d');
+                
+                    // Chart.js function, properties as labelled. Used to show the studentScores.
+                    var studentScores = new Chart(studentScoresCTX, {
+                        type: 'bar',
+                        data: {
+                            labels: getSpecificDataPiece("studentname") ,
+                            datasets: [{
+                                label: 'Score',
+                                data: getSpecificDataPiece("score"),
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                        scales:{yAxes:[{ticks:{beginAtZero:true}}]},
+                        responsive: false
+                        
+                            }
+                    });
+
+                    // Chart.js function, properties as labelled. Used to show the student improvement rates.
+                    var studentImprovementRates = new Chart(studentImprovementRatesCTX, {
+                        type: 'bar',
+                        data: {
+                            labels: getSpecificDataPiece("studentname") ,
+                            datasets: [{
+                                label: 'Improvement Rate',
+                                data: getSpecificDataPiece("improvementrate"),
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                        scales:{yAxes:[{ticks:{beginAtZero:true}}]},
+                        responsive: false
+                        
+                            }
+                    });
+                                    
+                
+                
+                
+                
+                
+                
+                </script>
+
+                <div style="border: 1px solid white;"><canvas id="studentScores" width="500" height="450"></canvas></div>
+                
+                <br>
+                <div style="border: 1px solid white;"><canvas id="studentImprovementRates" width="500" height="450"></canvas></div>
+                
+            </td>
         </tr>
         {% endfor %}
     </tbody>

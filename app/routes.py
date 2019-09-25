@@ -172,12 +172,15 @@ def user(username):
         #print(studentsdata[1][0].studentid)
 
     
-        print(len(studentsdata))
+        print(studentsdata[2].studentid)
         print("STUDENTDATA LINE ABOVE")
         studentdatadicts = StudentDataHelper(studentsdata);
 
 
         print(json.dumps(studentdatadicts))
+
+        #data parsed to javascript script
+        json_for_graphs = json.dumps(studentdatadicts)
 
         #print(studentdatadicts)
 
@@ -202,7 +205,7 @@ def user(username):
             db.session.add(thisClass)
             db.session.commit()
         
-        return render_template('user.html', user=user, form=form, classes=classs, studentdicts=studentdicts, studentdatadicts = studentdatadicts)  
+        return render_template('user.html', user=user, form=form, classes=classs, studentdicts=studentdicts, studentdatadicts = studentdatadicts, json_for_graphs=json_for_graphs)  
     else:
 
         return render_template('index.html')
