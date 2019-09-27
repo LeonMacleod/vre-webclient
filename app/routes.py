@@ -1,11 +1,11 @@
 from app import app, db
 from app.models import Users, Classs, Students, Enrolment, StudentData
 from flask import render_template, flash, redirect, request, url_for, session
-from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm
+from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm, UserEditForm
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, update
 import json
 
 #Route that handles page signup
@@ -23,11 +23,16 @@ def Signup():
         # setting its attributes from the form data.
         user.username = form.username.data;
         user.password = form.password.data;
-        user.useremail = form.email.data;
+        user.useremail = form.useremail.data;
 
-        # adding and commiting the data to the database.
+        # querying to ensure the users provided username and email are unique
+        
         db.session.add(user)
         db.session.commit()
+
+
+
+
         
         #feedback through flash
         flash('Login requested for user{}, remember_me={}'.format(form.username.data, form.remember_me.data))
@@ -68,7 +73,7 @@ def logout():
     #redirects the user to the homepage
     return redirect(url_for('index'))
 
-# The route for enrolment
+# The route for enrolments
 @app.route("/enrol", methods=['GET', 'POST'])
 def enrol():
     # Collecting the form from forms.py
@@ -158,7 +163,6 @@ def user(username):
 
 
         # take below, returns the 0th class's 0th students id.
-        #print(studentsinclass[0][0].studentid)
 
         
 
@@ -193,6 +197,49 @@ def user(username):
     else:
 
         return render_template('index.html')
+
+
+
+
+
+@app.route('/user/<username>/edit')
+def UserEdit(username):
+
+    form = UserEditForm()
+
+    user = Users.query.filter_by(username=username).first_or_404()
+    if(current_user.get_id() == user.get_id()):
+
+
+        if(form.validate_on_submit):
+            print(form)
+            print(form.classname.data);
+            print(form.newclassname.data);
+            #change_classname = form.newclassname.data;
+
+           # classs = Classs.query.filter_by(classcode = current_classname).first()
+            #print(current_classname)
+          #  print(classs)
+            #db.session.commit()
+
+
+
+            print("test validate")
+
+
+
+        
+        return render_template('useredit.html', form=form)
+
+
+    else:
+        return redirect(url_for('index'))
+        
+
+    
+
+
+
 
 #Index route, simply returns the index html.
 @app.route('/index')

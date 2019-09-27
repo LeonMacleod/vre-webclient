@@ -16,13 +16,7 @@
         
         </div>
 
-
         
-
-
-
-
-
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
 
@@ -58,10 +52,10 @@
         </p>
 
         
-        {{form.email(size=32)}}
+        {{form.useremail(size=32)}}
             
         <p>
-            {% for error in form.email.errors %}
+            {% for error in form.useremail.errors %}
             <span style="color: red;">[{{error}}]</span>
             {% endfor %}
                 

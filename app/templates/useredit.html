@@ -1,0 +1,52 @@
+
+{% extends "nav.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="../../static/css/forms.css">
+<link rel="stylesheet" type="text/css" href="../../static/css/base.css">
+
+
+<div id="form-container" style="height: 50vh">
+
+    <div id="form-header">
+        <p>Edit Class Name</p>
+    </div>
+
+    <form action="" method="post" novalidate>
+
+        {{form.hidden_tag() }}
+        <p id="form-sub-header">
+            Current Class Name
+        </p>
+        
+        {{form.classname(size=32)}}
+
+        <p>
+            {% for error in form.classname.errors %}
+                <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+
+        <p id="form-sub-header">
+                New Class Name
+        </p>
+                
+        {{form.newclassname(size=32)}}
+
+
+        <p>
+            {% for error in form.newclassname.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+                
+        <p>{{ form.submit(class_="form-submit")}}</p>
+                
+                
+    </form>
+
+</div>
+
+{% endblock %}
