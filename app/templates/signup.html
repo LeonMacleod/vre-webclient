@@ -46,21 +46,7 @@
             {% endfor %}
         </p>
 
-
-        <p id="form-sub-header">           
-            Email
-        </p>
-
         
-        {{form.useremail(size=32)}}
-            
-        <p>
-            {% for error in form.useremail.errors %}
-            <span style="color: red;">[{{error}}]</span>
-            {% endfor %}
-                
-        </p>
-
         <p id="form-sub-header">{{form.remember_me()}} {{ form.remember_me.label }}</p>
         <p>{{ form.submit(class_="form-submit")}}</p>
 

@@ -14,7 +14,6 @@ class Users(UserMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.VARCHAR(255), unique=True)
     password = db.Column(db.VARCHAR(255))
-    useremail = db.Column(db.VARCHAR(255), unique=True)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -55,13 +54,6 @@ class StudentData(db.Model):
 
     def __repr__(self):
         return '<Class {}'.format(self.dataid)
-
-
-
-
-
-
-
 
 @login.user_loader
 def load_user(uid):

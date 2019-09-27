@@ -8,22 +8,13 @@ from app.models import Users
 class SignupForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    useremail = StringField('Email', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign Up')
-
-    
-    
+ 
     def validate_username(self, username):
         user_unique_test = Users.query.filter_by(username = username.data).first()
         if user_unique_test is not None:
-            raise ValidationError('test')
-
-    def validate_email(self, useremail):
-        email_unique_test = Users.query.filter_by(useremail = useremail.data).first()
-        if email_unique_test is not None:
-            raise ValidationError('test2')
-
+            raise ValidationError('This username is already taken!')
 
 
 class LoginForm(FlaskForm):

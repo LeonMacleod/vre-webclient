@@ -20,10 +20,12 @@ def Signup():
 
         #creating a user instance
         user = Users()
+
+
+        
         # setting its attributes from the form data.
         user.username = form.username.data;
         user.password = form.password.data;
-        user.useremail = form.useremail.data;
 
         # querying to ensure the users provided username and email are unique
         
@@ -160,11 +162,7 @@ def user(username):
 
         #main list holding all to be created data packets
         studentdatapackets = []
-
-
         # take below, returns the 0th class's 0th students id.
-
-        
 
         #looping through the number of class objects containing students.
         for i in range(len(studentsinclass)):
@@ -202,7 +200,7 @@ def user(username):
 
 
 
-@app.route('/user/<username>/edit')
+@app.route('/user/<username>/edit', methods=['GET', 'POST'])
 def UserEdit(username):
 
     form = UserEditForm()
@@ -212,15 +210,19 @@ def UserEdit(username):
 
 
         if(form.validate_on_submit):
-            print(form)
-            print(form.classname.data);
-            print(form.newclassname.data);
-            #change_classname = form.newclassname.data;
 
-           # classs = Classs.query.filter_by(classcode = current_classname).first()
-            #print(current_classname)
+            
+
+            current_classname = form.classname.data;
+            change_classname = form.newclassname.data;
+            
+            classs = Classs.query.filter_by(classcode = current_classname).first()
+            
+            classs["classcode"] = change_classname
+            #Classs.query.filter_by(classcode = current_classname).update({change_classname: (Classs.classcode)})
+
           #  print(classs)
-            #db.session.commit()
+            db.session.commit()
 
 
 
