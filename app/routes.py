@@ -190,6 +190,7 @@ def user(username):
             #adding and commiting to the database
             db.session.add(thisClass)
             db.session.commit()
+            return redirect(url_for('user', username=username))
         
         return render_template('user.html', user=user, form=form, classes=classs, studentdatadicts = studentdatadicts, json_for_graphs=json_for_graphs)  
     else:
