@@ -218,12 +218,10 @@ def UserEdit(username):
             change_classname = form.newclassname.data;
             
             classs = Classs.query.filter_by(classcode = current_classname).first()
-            
-            classs["classcode"] = change_classname
-            #Classs.query.filter_by(classcode = current_classname).update({change_classname: (Classs.classcode)})
-
-          #  print(classs)
-            db.session.commit()
+            if classs is not None:
+                classs.classcode = change_classname
+                db.session.commit()
+           
 
 
 

@@ -18,7 +18,7 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
     def get_id(self):
-           return (self.uid)
+        return (self.uid)
         
 
 class Students(db.Model):
