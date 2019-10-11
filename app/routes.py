@@ -160,19 +160,47 @@ def user(username):
             #getting all students in this users class.
             studentsinclass.append(classs[i].students)
 
+        
+
         #main list holding all to be created data packets
         studentdatapackets = []
         # take below, returns the 0th class's 0th students id.
+
+        null_occurence = False
 
         #looping through the number of class objects containing students.
         for i in range(len(studentsinclass)):
             for o in range(len(studentsinclass[i])):
                 # identifiying information to be parsed to the graphing process.
                 studentdatapacket = StudentData.query.filter_by(studentid=studentsinclass[i][o].studentid).first()
+                if(studentdatapacket is None):
+                    null_occurence = True
+                print(studentdatapacket)
+                print(null_occurence)
                 studentdatapackets.append(studentdatapacket)
 
+        # logic here does not quite make sense but 
+        # if x is not none wouldn't work.
+        # this along with the if statement in the javascript checking for null values
+        # means that if student data is not set the users page will still display.
+
+        #print( studentdatapackets)
+
+
+        if(null_occurence is True):
+
+            studentdatadicts = None;
+        
+        if(null_occurence is False):
+            studentdatadicts = StudentDataHelper(studentdatapackets);
+
+
+
+
+            
+        
         #Sending this information to the helper function to return the mapped dictionary
-        studentdatadicts = StudentDataHelper(studentdatapackets);
+        
 
         #json data for graphs (this in its current state isn't actually JSON but is converted into it at the jinja2 end.) (MAPPED DICTIONARY MENTIONED ABOVE)
         json_for_graphs = studentdatadicts
