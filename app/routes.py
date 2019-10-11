@@ -203,33 +203,29 @@ def user(username):
 
 @app.route('/user/<username>/edit', methods=['GET', 'POST'])
 def UserEdit(username):
-
     form = UserEditForm()
 
     user = Users.query.filter_by(username=username).first_or_404()
     if(current_user.get_id() == user.get_id()):
 
 
-        if(form.validate_on_submit):
 
-            
+
+        if(form.validate_on_submit):
 
             current_classname = form.classname.data;
             change_classname = form.newclassname.data;
             
             classs = Classs.query.filter_by(classcode = current_classname).first()
+        
             if classs is not None:
                 classs.classcode = change_classname
                 db.session.commit()
-           
+                return redirect(url_for('user', username=username))
+            else:
+                # if classs is none
+                flash("The entered classcode does not exist!")
 
-
-
-            print("test validate")
-
-
-
-        
         return render_template('useredit.html', form=form)
 
 

@@ -15,6 +15,12 @@ class Users(UserMixin, db.Model):
     username = db.Column(db.VARCHAR(255), unique=True)
     password = db.Column(db.VARCHAR(255))
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
     def get_id(self):
@@ -38,7 +44,9 @@ class Classs(db.Model):
     classcode = db.Column(db.VARCHAR(255), unique=True)
     
     def __repr__(self):
-        return '<Class {}'.format(self.classid)
+        return '<Class {}'.format(self.classcode)
+
+
 
 class StudentData(db.Model):
     __tablename__ = 'studentdata'

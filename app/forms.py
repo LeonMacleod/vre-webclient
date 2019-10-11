@@ -27,10 +27,7 @@ class ClassForm(FlaskForm):
     class_code = StringField('code', validators=[DataRequired()])
     submit = SubmitField('Create Class')
 
-    def validate_class_exists(self, provided_classcode):
-        classs = Classs.query.filter_by(classcode = provided_classcode.data).first()
-        if classs is None:
-            raise ValidationError('This class does not exist!')
+    
 
 
 class EnrolForm(FlaskForm):
@@ -44,7 +41,6 @@ class UserEditForm(FlaskForm):
     classname = StringField('classname', validators=[DataRequired()])
     newclassname = StringField('newclassname', validators=[DataRequired()])
     submit = SubmitField('Change Classname')
-
 
 
 
