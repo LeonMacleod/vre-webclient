@@ -25,7 +25,7 @@ def Signup():
         
         # setting its attributes from the form data.
         user.username = form.username.data;
-        user.password = form.password.data;
+        user.set_password(form.password.data)
 
         # querying to ensure the users provided username and email are unique
         
@@ -58,7 +58,7 @@ def Login():
         # attempting to get a user in the database with the same username as that provided in the form
         user = Users.query.filter_by(username=form.username_or_email.data).first()
         #if this username provided does not correlate to a row in the database the user will be redirected.
-        if user is None or not Users.query.filter_by(password=form.password.data).first():
+        if user is None or not user.check_password(form.password.data):
             return redirect(url_for('Login'))
         #if this username provided does correlate to a row in the database the user is logged in and redirected to their user page.
         login_user(user, remember=form.remember_me.data)
