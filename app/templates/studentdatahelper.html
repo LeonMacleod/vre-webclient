@@ -1,0 +1,140 @@
+
+{% extends "nav.html" %}
+
+{% block content %}
+
+<title>VR EDUCATUM</title>
+<link rel="stylesheet" type="text/css" href="../static/css/forms.css">
+
+
+<div id="form-container" style="height: 100vh;">
+
+        <div id="form-header" style="height: 5vh;">
+
+            <p>Student Data Helper (For demonstrational purposes)</p>
+        
+        
+        </div>
+
+        
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+
+        <p id="form-sub-header">           
+            Studentid
+        </p>
+        
+        {{form.studentid(size=32)}}
+            
+        <p>
+            {% for error in form.studentid.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+
+        <p id="form-sub-header">           
+            Gameid
+        </p>
+
+        
+        {{form.gameid(size=32)}}
+        <p>
+            {% for error in form.gameid.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+
+
+        <p id="form-sub-header">           
+            Score
+        </p>
+
+        
+        {{form.score(size=32)}}
+        <p>
+            {% for error in form.score.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+
+        <p id="form-sub-header">           
+            Areamost
+        </p>
+
+        
+        {{form.areamost(size=32)}}
+        <p>
+            {% for error in form.areamost.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+
+        <p id="form-sub-header">           
+            Arealeast
+        </p>
+
+        
+        {{form.arealeast(size=32)}}
+        <p>
+            {% for error in form.arealeast.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+        <p id="form-sub-header">           
+            Improvementrate
+        </p>
+
+        
+        {{form.improvementrate(size=32)}}
+        <p>
+            {% for error in form.improvementrate.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+
+        <p id="form-sub-header">           
+            Studentname
+        </p>
+
+        
+        {{form.studentname(size=32)}}
+        <p>
+            {% for error in form.studentname.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+        <p id="form-sub-header">           
+            Classid
+        </p>
+
+        
+        {{form.classid(size=32)}}
+        <p>
+            {% for error in form.classid.errors %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </p>
+
+        
+
+        <p>{{ form.submit(class_="form-submit")}}</p>
+
+
+    </form>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

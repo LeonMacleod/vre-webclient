@@ -27,6 +27,18 @@ class ClassForm(FlaskForm):
     class_code = StringField('code', validators=[DataRequired()])
     submit = SubmitField('Create Class')
 
+
+class StudentHelper(FlaskForm):
+    studentid = IntegerField('studentid', validators=[DataRequired()])
+    gameid = IntegerField('gameid', validators=[DataRequired()])
+    score = IntegerField('score', validators=[DataRequired()])
+    areamost = StringField('areamost', validators=[DataRequired()])
+    arealeast = StringField('arealeast', validators=[DataRequired()])
+    improvementrate = StringField('improvementrate', validators=[DataRequired()])
+    studentname = StringField('studentname', validators=[DataRequired()])
+    classid = IntegerField('classid', validators=[DataRequired()])
+
+    submit = SubmitField('Insert Student Data')
     
 
 

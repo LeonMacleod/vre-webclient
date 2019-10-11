@@ -1,7 +1,7 @@
 from app import app, db
 from app.models import Users, Classs, Students, Enrolment, StudentData
 from flask import render_template, flash, redirect, request, url_for, session
-from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm, UserEditForm
+from app.forms import SignupForm, LoginForm, ClassForm, EnrolForm, UserEditForm, StudentHelper
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy.orm import sessionmaker
@@ -231,10 +231,36 @@ def UserEdit(username):
 
     else:
         return redirect(url_for('index'))
-        
 
-    
+@app.route('/studentdatahelper', methods=['GET', 'POST'])
+def StudentDataInsert():
+    form = StudentHelper()
 
+    if form.validate_on_submit:
+
+        studentid = form.studentid.data;
+        gameid = form.gameid.data;
+        score = form.score.data;
+        areamost = form.areamost.data;
+        arealeast = form.arealeast.data;
+        improvementrate = form.improvementrate.data;
+        studentname = form.studentname.data;
+        classid = form.classid.data;
+
+        studentdata = StudentData()
+        studentdata.studentid = studentid
+        studentdata.gameid = gameid;
+        studentdata.score = score;
+        studentdata.areamost = areamost;
+        studentdata.arealeast = arealeast;
+        studentdata.improvementrate = improvementrate;
+        studentdata.studentname = studentname;
+        studentdata.classid = classid;
+
+        db.session.add(studentdata)
+        db.session.commit()
+
+    return render_template('studentdatahelper.html', form=form)
 
 
 
