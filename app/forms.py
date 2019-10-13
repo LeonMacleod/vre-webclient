@@ -27,6 +27,11 @@ class ClassForm(FlaskForm):
     class_code = StringField('code', validators=[DataRequired()])
     submit = SubmitField('Create Class')
 
+    def validate_class_code(self, class_code):
+        class_code_unique_test = Classs.query.filter_by(classcode = class_code.data).first()
+        if class_code_unique_test is not None:
+            raise ValidationError('This class code is already in use.')
+
 
 class StudentHelper(FlaskForm):
     studentid = IntegerField('studentid', validators=[DataRequired()])

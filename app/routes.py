@@ -215,6 +215,8 @@ def user(username):
             # The classcode is set as specified
             thisClass.classcode = form.class_code.data;
 
+            
+
             #adding and commiting to the database
             db.session.add(thisClass)
             db.session.commit()
@@ -293,6 +295,10 @@ def StudentDataInsert():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.route('/help')
+def help():
+    return render_template('help.html')
 
 #Index route, simply returns the index html.
 @app.route('/index')
