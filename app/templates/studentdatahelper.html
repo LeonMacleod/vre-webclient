@@ -1,4 +1,3 @@
-
 {% extends "nav.html" %}
 
 {% block content %}
@@ -6,20 +5,14 @@
 <title>VR EDUCATUM</title>
 <link rel="stylesheet" type="text/css" href="../static/css/forms.css">
 
-
 <div id="form-container" style="height: 100vh;">
 
         <div id="form-header" style="height: 5vh;">
-
             <p>Student Data Helper (For demonstrational purposes)</p>
-        
-        
         </div>
 
-        
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-
 
         <p id="form-sub-header">           
             Studentid
@@ -33,12 +26,10 @@
             {% endfor %}
         </p>
 
-
         <p id="form-sub-header">           
             Gameid
         </p>
 
-        
         {{form.gameid(size=32)}}
         <p>
             {% for error in form.gameid.errors %}
@@ -46,13 +37,10 @@
             {% endfor %}
         </p>
 
-
-
         <p id="form-sub-header">           
             Score
         </p>
 
-        
         {{form.score(size=32)}}
         <p>
             {% for error in form.score.errors %}
@@ -60,12 +48,10 @@
             {% endfor %}
         </p>
 
-
         <p id="form-sub-header">           
             Areamost
         </p>
 
-        
         {{form.areamost(size=32)}}
         <p>
             {% for error in form.areamost.errors %}
@@ -115,7 +101,6 @@
             Classid
         </p>
 
-        
         {{form.classid(size=32)}}
         <p>
             {% for error in form.classid.errors %}
@@ -123,18 +108,10 @@
             {% endfor %}
         </p>
 
-        
-
         <p>{{ form.submit(class_="form-submit")}}</p>
 
 
     </form>
 </div>
-
-
-
-
-
-
 
 {% endblock %}

@@ -21,8 +21,6 @@ def Signup():
         #creating a user instance
         user = Users()
 
-
-        
         # setting its attributes from the form data.
         user.username = form.username.data;
         user.set_password(form.password.data)
@@ -32,10 +30,6 @@ def Signup():
         db.session.add(user)
         db.session.commit()
 
-
-
-
-        
         #feedback through flash
         flash('Login requested for user{}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect('/login')
@@ -155,29 +149,27 @@ def user(username):
         
         # getting the classs data of the user (teacher) with the id of the current user(teacher)
         classs = Classs.query.filter_by(teacherid = int(current_user.get_id())).all()
-        studentsinclass = []
+        students_in_class = []
         for i in range(len(classs)):
             #getting all students in this users class.
-            studentsinclass.append(classs[i].students)
-
-        
+            students_in_class.append(classs[i].students)
 
         #main list holding all to be created data packets
-        studentdatapackets = []
+        student_data_packets = []
         # take below, returns the 0th class's 0th students id.
 
         null_occurence = False
 
         #looping through the number of class objects containing students.
-        for i in range(len(studentsinclass)):
-            for o in range(len(studentsinclass[i])):
+        for i in range(len(students_in_class)):
+            for o in range(len(students_in_class[i])):
                 # identifiying information to be parsed to the graphing process.
-                studentdatapacket = StudentData.query.filter_by(studentid=studentsinclass[i][o].studentid).first()
-                if(studentdatapacket is None):
+                student_data_packet = StudentData.query.filter_by(studentid=students_in_class[i][o].studentid).first()
+                if(student_data_packet is None):
                     null_occurence = True
-                print(studentdatapacket)
+                print(student_data_packet)
                 print(null_occurence)
-                studentdatapackets.append(studentdatapacket)
+                student_data_packets.append(student_data_packet)
 
         # logic here does not quite make sense but 
         # if x is not none wouldn't work.
@@ -186,25 +178,17 @@ def user(username):
 
         #print( studentdatapackets)
 
-
         if(null_occurence is True):
 
-            studentdatadicts = None;
+            student_data_dicts = None;
         
         if(null_occurence is False):
-            studentdatadicts = StudentDataHelper(studentdatapackets);
+            student_data_dicts = StudentDataHelper(student_data_packets);
 
-
-
-
-            
-        
         #Sending this information to the helper function to return the mapped dictionary
         
-
         #json data for graphs (this in its current state isn't actually JSON but is converted into it at the jinja2 end.) (MAPPED DICTIONARY MENTIONED ABOVE)
-        json_for_graphs = studentdatadicts
-
+        json_for_graphs = student_data_dicts
 
         # If the create a class button is clicked
         if form.validate_on_submit():
@@ -215,21 +199,15 @@ def user(username):
             # The classcode is set as specified
             thisClass.classcode = form.class_code.data;
 
-            
-
             #adding and commiting to the database
             db.session.add(thisClass)
             db.session.commit()
             return redirect(url_for('user', username=username))
         
-        return render_template('user.html', user=user, form=form, classes=classs, studentdatadicts = studentdatadicts, json_for_graphs=json_for_graphs)  
+        return render_template('user.html', user=user, form=form, classes=classs, studentdatadicts = student_data_dicts, json_for_graphs=json_for_graphs)  
     else:
 
         return render_template('index.html')
-
-
-
-
 
 @app.route('/user/<username>/edit', methods=['GET', 'POST'])
 def UserEdit(username):
@@ -237,9 +215,6 @@ def UserEdit(username):
 
     user = Users.query.filter_by(username=username).first_or_404()
     if(current_user.get_id() == user.get_id()):
-
-
-
 
         if(form.validate_on_submit):
 
@@ -257,8 +232,6 @@ def UserEdit(username):
                 flash("The entered classcode does not exist!")
 
         return render_template('useredit.html', form=form)
-
-
     else:
         return redirect(url_for('index'))
 
@@ -267,7 +240,6 @@ def StudentDataInsert():
     form = StudentHelper()
 
     if form.validate_on_submit:
-
         studentid = form.studentid.data;
         gameid = form.gameid.data;
         score = form.score.data;

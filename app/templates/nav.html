@@ -1,24 +1,18 @@
-
 <html>
-
     <head>
 
         <link rel="stylesheet" type="text/css" href="../static/css/base.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto&display=swap" rel="stylesheet">
-
-
 
     </head>
 
     <body>
         <div id="nav-bar">    
             <ul id="nav-ul">
-                <a id="title"><b>VR EDUCATUM</b></a>
+                <a id="title"><b>VR EDUCATUM (DEV BUILD (Do not take live.))</b></a>
                 {% if current_user.is_authenticated %}
-                
                     <li><a href="/logout">Log out</a></li>
                     <li><a href="/user/{{current_user.username}}">{{current_user.username}}</a></li>
-                        
                 {% else %}
                     <li><a href="/login">Log In</a></li>
                     <li><a href="/signup">Sign Up</a></li>

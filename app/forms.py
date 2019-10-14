@@ -10,6 +10,9 @@ class SignupForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign Up')
+
+
+    #Validation helper function, used to prevent users being created of the same username.
  
     def validate_username(self, username):
         user_unique_test = Users.query.filter_by(username = username.data).first()
@@ -26,6 +29,8 @@ class LoginForm(FlaskForm):
 class ClassForm(FlaskForm):
     class_code = StringField('code', validators=[DataRequired()])
     submit = SubmitField('Create Class')
+
+    #Validation helper function, used to prevent classes being created with the same classcode.
 
     def validate_class_code(self, class_code):
         class_code_unique_test = Classs.query.filter_by(classcode = class_code.data).first()
@@ -45,8 +50,6 @@ class StudentHelper(FlaskForm):
 
     submit = SubmitField('Insert Student Data')
     
-
-
 class EnrolForm(FlaskForm):
     studentname = StringField('studentname', validators=[DataRequired()])
     studentcode = IntegerField('studentcode', validators=[DataRequired()])

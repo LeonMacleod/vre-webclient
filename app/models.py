@@ -15,9 +15,13 @@ class Users(UserMixin, db.Model):
     username = db.Column(db.VARCHAR(255), unique=True)
     password = db.Column(db.VARCHAR(255))
 
+    #Password set helper function used to generate a hashed version of the string password entered by the user.
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
+
+    #Password check helper function used to check the originally generated hashed password with the hashed (using same method) entered password.
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
@@ -65,5 +69,4 @@ class StudentData(db.Model):
 
 @login.user_loader
 def load_user(uid):
-
     return Users.query.get(int(uid))
