@@ -107,7 +107,7 @@ def enrol():
 # Helper function for the user route, helps with with converting
 # database data to python dictionaries to JSON strings to then have graphed data provided
 # to the user.
-def StudentDataHelper(data):
+def StudentDataHelperFunc(data):
 
     dicts_to_return = []
 
@@ -183,7 +183,7 @@ def user(username):
             student_data_dicts = None;
         
         if(null_occurence is False):
-            student_data_dicts = StudentDataHelper(student_data_packets);
+            student_data_dicts = StudentDataHelperFunc(student_data_packets);
 
         #Sending this information to the helper function to return the mapped dictionary
         
@@ -236,32 +236,56 @@ def UserEdit(username):
         return redirect(url_for('index'))
 
 @app.route('/studentdatahelper', methods=['GET', 'POST'])
-def StudentDataInsert():
+def StudentDataHelper():
     form = StudentHelper()
+    print("made form")
 
-    if form.validate_on_submit:
-        studentid = form.studentid.data;
-        gameid = form.gameid.data;
-        score = form.score.data;
-        areamost = form.areamost.data;
-        arealeast = form.arealeast.data;
-        improvementrate = form.improvementrate.data;
-        studentname = form.studentname.data;
-        classid = form.classid.data;
+    if request.method == "POST":
+        if form.validate_on_submit:
 
-        studentdata = StudentData()
-        studentdata.studentid = studentid
-        studentdata.gameid = gameid;
-        studentdata.score = score;
-        studentdata.areamost = areamost;
-        studentdata.arealeast = arealeast;
-        studentdata.improvementrate = improvementrate;
-        studentdata.studentname = studentname;
-        studentdata.classid = classid;
 
-        db.session.add(studentdata)
-        db.session.commit()
+            proceed_query = False;
 
+            studentid = form.studentid.data;
+            proceed_query = True if studentid is not None else redirect(url_for('StudentDataHelper'))
+
+            gameid = form.gameid.data;
+            proceed_query = True if gameid is not None else redirect(url_for('StudentDataHelper'))
+
+            score = form.score.data;
+            proceed_query = True if score is not None else redirect(url_for('StudentDataHelper'))
+
+            areamost = form.areamost.data;
+            proceed_query = True if areamost != "" else redirect(url_for('StudentDataHelper'))
+
+            arealeast = form.arealeast.data;
+            proceed_query = True if arealeast != "" else redirect(url_for('StudentDataHelper'))
+
+            improvementrate = form.improvementrate.data;
+            proceed_query = True if improvementrate != "" else redirect(url_for('StudentDataHelper'))
+
+            studentname = form.studentname.data;
+            proceed_query = True if studentname != "" else redirect(url_for('StudentDataHelper'))
+    
+            classid = form.classid.data;
+            proceed_query = True if classid is not None else redirect(url_for('StudentDataHelper'))
+
+            if(proceed_query == True):
+                studentdata = StudentData()
+                studentdata.studentid = studentid
+                studentdata.gameid = gameid;
+                studentdata.score = score;
+                studentdata.areamost = areamost;
+                studentdata.arealeast = arealeast;
+                studentdata.improvementrate = improvementrate;
+                studentdata.studentname = studentname;
+                studentdata.classid = classid;
+
+                db.session.add(studentdata)
+                db.session.commit()
+
+            
+    print("rendering")
     return render_template('studentdatahelper.html', form=form)
 
 @app.errorhandler(404)

@@ -4,6 +4,18 @@ from wtforms.validators import DataRequired, ValidationError, Email
 from app.models import Users, Classs
 
 
+class StudentHelper(FlaskForm):
+    studentid = IntegerField('studentid', validators=[DataRequired()])
+    gameid = IntegerField('gameid', validators=[DataRequired()])
+    score = IntegerField('score', validators=[DataRequired()])
+    areamost = StringField('areamost', validators=[DataRequired()])
+    arealeast = StringField('arealeast', validators=[DataRequired()])
+    improvementrate = StringField('improvementrate', validators=[DataRequired()])
+    studentname = StringField('studentname', validators=[DataRequired()])
+    classid = IntegerField('classid', validators=[DataRequired()])
+
+    submit = SubmitField('Insert Student Data')
+
 
 class SignupForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -38,17 +50,7 @@ class ClassForm(FlaskForm):
             raise ValidationError('This class code is already in use.')
 
 
-class StudentHelper(FlaskForm):
-    studentid = IntegerField('studentid', validators=[DataRequired()])
-    gameid = IntegerField('gameid', validators=[DataRequired()])
-    score = IntegerField('score', validators=[DataRequired()])
-    areamost = StringField('areamost', validators=[DataRequired()])
-    arealeast = StringField('arealeast', validators=[DataRequired()])
-    improvementrate = StringField('improvementrate', validators=[DataRequired()])
-    studentname = StringField('studentname', validators=[DataRequired()])
-    classid = IntegerField('classid', validators=[DataRequired()])
 
-    submit = SubmitField('Insert Student Data')
     
 class EnrolForm(FlaskForm):
     studentname = StringField('studentname', validators=[DataRequired()])
