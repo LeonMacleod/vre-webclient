@@ -262,7 +262,7 @@ def StudentDataHelper():
             proceed_query = True if arealeast != "" else redirect(url_for('StudentDataHelper'))
 
             improvementrate = form.improvementrate.data;
-            proceed_query = True if improvementrate != "" else redirect(url_for('StudentDataHelper'))
+            proceed_query = True if improvementrate is not None else redirect(url_for('StudentDataHelper'))
 
             studentname = form.studentname.data;
             proceed_query = True if studentname != "" else redirect(url_for('StudentDataHelper'))
