@@ -284,6 +284,8 @@ def StudentDataHelper():
                 db.session.add(studentdata)
                 db.session.commit()
 
+                return redirect(url_for('index'))
+
             
     print("rendering")
     return render_template('studentdatahelper.html', form=form)
