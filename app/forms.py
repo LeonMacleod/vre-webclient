@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, ValidationError, Email
+from wtforms.validators import DataRequired, ValidationError, Email, Length
 from app.models import Users, Classs
 
 
@@ -18,8 +18,8 @@ class StudentHelper(FlaskForm):
 
 
 class SignupForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired(), Length(max=20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(max=50)])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign Up')
 
@@ -33,13 +33,13 @@ class SignupForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username_or_email = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username_or_email = StringField('Username', validators=[DataRequired(), Length(max=20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(max=50)])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Log In')
 
 class ClassForm(FlaskForm):
-    class_code = StringField('code', validators=[DataRequired()])
+    class_code = StringField('code', validators=[DataRequired(), Length(max=20)])
     submit = SubmitField('Create Class')
 
     #Validation helper function, used to prevent classes being created with the same classcode.
@@ -53,9 +53,9 @@ class ClassForm(FlaskForm):
 
     
 class EnrolForm(FlaskForm):
-    studentname = StringField('studentname', validators=[DataRequired()])
-    studentcode = IntegerField('studentcode', validators=[DataRequired()])
-    classcode = StringField('classcode', validators=[DataRequired()])
+    studentname = StringField('studentname', validators=[DataRequired(), Length(max=20)])
+    studentcode = StringField('studentcode', validators=[DataRequired(), Length(max=50)])
+    classcode = StringField('classcode', validators=[DataRequired(), Length(max=20)])
     submit = SubmitField('Enrol')
 
 

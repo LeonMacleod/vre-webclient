@@ -101,6 +101,8 @@ def enrol():
         # adding and commiting enrolment
         db.session.add(student)
         db.session.commit()
+
+        return redirect(url_for('enrol'))
     # on return the enrolment.html template is rendered and the form is parsed.
     return render_template('enrolment.html', form=form)
 
@@ -293,6 +295,10 @@ def StudentDataHelper():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+app.errorhandler(500)
+def internal_error(error):
+    return "500 error"
 
 @app.route('/help')
 def help():
