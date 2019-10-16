@@ -224,8 +224,11 @@ def UserEdit(username):
             change_classname = form.newclassname.data;
             
             classs = Classs.query.filter_by(classcode = current_classname).first()
-        
-            if classs is not None:
+
+            # to ensure the user does not attempt to rename their class to an already existing class.
+            classs_changereq = Classs.query.filter_by(classcode = change_classname).first()
+            
+            if classs is not None and classs_changereq is None:
                 classs.classcode = change_classname
                 db.session.commit()
                 return redirect(url_for('user', username=username))
