@@ -22,7 +22,7 @@ def Signup():
         user = Users()
 
         # setting its attributes from the form data.
-        user.username = form.username.data;
+        user.username = (form.username.data).lower();
         user.set_password(form.password.data)
 
         # querying to ensure the users provided username and email are unique
@@ -50,9 +50,9 @@ def Login():
     # if the login button is clicked.
     if form.validate_on_submit():
         # attempting to get a user in the database with the same username as that provided in the form
-        user = Users.query.filter_by(username=form.username_or_email.data).first()
+        user = Users.query.filter_by(username=(form.username_or_email.data).lower()).first()
         #if this username provided does not correlate to a row in the database the user will be redirected.
-        if user is None or not user.check_password(form.password.data):
+        if user is None or not user.check_password((form.password.data).lower()):
             return redirect(url_for('Login'))
         #if this username provided does correlate to a row in the database the user is logged in and redirected to their user page.
         login_user(user, remember=form.remember_me.data)
