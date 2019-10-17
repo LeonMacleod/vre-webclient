@@ -1,3 +1,6 @@
+/* STYLES FOR TABLES OCCURING ON THE WEBSITE, IMPLEMENTED HEAVILY in User.html */
+
+/* main table sizing and attributes */
 table {
     border-collapse: collapse;
     width: 75%;
@@ -7,23 +10,29 @@ table {
 
 
   }
+
+  /* Table items are alligned to the left */
   
   th, td {
     text-align: left;
     
   }
 
+  /* Table data text color and height */
+
   td{
       color: white;
       height: 75vh;
       
   }
+
+  /* table header test color */
   th{
       color: #3D3D3D;
+      background-color: #36F1CD;
   }
   
+  /* table rows of even and odd existence values have different colors for visibility of segments */
   tr:nth-child(even){background-color: #3D3D3D}
   tr:nth-child(odd){background-color: #3D3D3D}
   
-  th {
-    background-color: #36F1CD;

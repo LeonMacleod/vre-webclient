@@ -211,45 +211,67 @@ def user(username):
 
         return render_template('index.html')
 
+
+# User edit route, where users edit the name of their classes.
+#takes parameter user as each user has a specific page that has a /edit route.
+
 @app.route('/user/<username>/edit', methods=['GET', 'POST'])
 def UserEdit(username):
+
+
+    #specifying form from forms.py
     form = UserEditForm()
 
+    # if this user does not exist throw 404 (redirected to 404 page which specifies page not found)
     user = Users.query.filter_by(username=username).first_or_404()
+
+    #even if the user exists it may not be the right user on the page therefore ensuring the user on the page now owns the page.
     if(current_user.get_id() == user.get_id()):
 
+        #on form validation.    
         if(form.validate_on_submit):
 
+            #curren t classname from form.
             current_classname = form.classname.data;
+            #specified classname to change above classname into
             change_classname = form.newclassname.data;
             
+            #checking to ensure the provided current classname actually exists.
             classs = Classs.query.filter_by(classcode = current_classname).first()
 
             # to ensure the user does not attempt to rename their class to an already existing class.
             classs_changereq = Classs.query.filter_by(classcode = change_classname).first()
-            
+
+            #if the providesd class name exists and the one specified for change is not already a class name the change may occur.
             if classs is not None and classs_changereq is None:
                 classs.classcode = change_classname
                 db.session.commit()
                 return redirect(url_for('user', username=username))
             else:
-                # if classs is none
+                # if the above characteristics are not met.
                 flash("The entered classcode does not exist!")
 
+    #redirects:
         return render_template('useredit.html', form=form)
     else:
         return redirect(url_for('index'))
 
+# Student data helper route, used to submit student data while the educational game that accompanies the site is not integrated. 
+# FOR ADMIN USE ONLY, would not be available in live build
+
 @app.route('/studentdatahelper', methods=['GET', 'POST'])
 def StudentDataHelper():
+    #specifying form from forms.py
     form = StudentHelper()
-    print("made form")
 
+    # If post request occurs (on validation)
     if request.method == "POST":
         if form.validate_on_submit:
-
-
+            
+            # Used to check if a form field is empty in the following ternary statmenets.
             proceed_query = False;
+
+            # In each segment the form data is collected and then it is checked for either being None (if integer field is empty) or "" (if string field is empty)
 
             studentid = form.studentid.data;
             proceed_query = True if studentid is not None else redirect(url_for('StudentDataHelper'))
@@ -275,6 +297,8 @@ def StudentDataHelper():
             classid = form.classid.data;
             proceed_query = True if classid is not None else redirect(url_for('StudentDataHelper'))
 
+
+            # if all ternary statements were passed without the proceed_query operator being set to false (currently not required as I'm using page redirects)
             if(proceed_query == True):
                 studentdata = StudentData()
                 studentdata.studentid = studentid
@@ -286,23 +310,27 @@ def StudentDataHelper():
                 studentdata.studentname = studentname;
                 studentdata.classid = classid;
 
+                #submitting data to database.
+
                 db.session.add(studentdata)
                 db.session.commit()
 
                 return redirect(url_for('index'))
 
-            
-    print("rendering")
     return render_template('studentdatahelper.html', form=form)
 
+
+#in the event of a 404 error the user is directed to the 404 page.
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html'), 404)
 
-app.errorhandler(500)
+#in the event of a 500 server error I will still load the 404 page as it is not error specific.
+@app.errorhandler(500)
 def internal_error(error):
-    return "500 error"
+    return render_template('404.html', 404)
 
+#Handling the help page.
 @app.route('/help')
 def help():
     return render_template('help.html')

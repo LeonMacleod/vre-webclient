@@ -2,14 +2,14 @@ from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
+# Enrolment model for enrolment table
 class Enrolment(db.Model):
     __tablename__ = 'enrolment'
     eid = db.Column(db.Integer, primary_key=True)
     sid = db.Column(db.Integer, db.ForeignKey('students.studentid'))
     cid = db.Column (db.Integer, db.ForeignKey('classs.classid'))
 
-
+# users model for users table.
 class Users(UserMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.VARCHAR(255), unique=True)
@@ -30,7 +30,7 @@ class Users(UserMixin, db.Model):
     def get_id(self):
         return (self.uid)
         
-
+# Student smodel for students table.
 class Students(db.Model):
     __tablename__ = 'students'
     studentid = db.Column(db.Integer, primary_key=True)
@@ -41,6 +41,7 @@ class Students(db.Model):
         return '<Student {}'.format(self.studentname)
 
 #class is a keyword so I've added an extra 's'
+#Class model for class table.
 class Classs(db.Model):
     __tablename__ = 'classs'
     classid = db.Column(db.Integer, primary_key=True)
@@ -51,7 +52,7 @@ class Classs(db.Model):
         return '<Class {}'.format(self.classcode)
 
 
-
+# StudentData model for studentdata table.
 class StudentData(db.Model):
     __tablename__ = 'studentdata'
     dataid = db.Column(db.Integer, primary_key=True)

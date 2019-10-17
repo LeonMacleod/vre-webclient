@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Integ
 from wtforms.validators import DataRequired, ValidationError, Email, Length
 from app.models import Users, Classs
 
-
+#StudentHelper form for studentdatahelper.html
 class StudentHelper(FlaskForm):
     studentid = IntegerField('studentid', validators=[DataRequired()])
     gameid = IntegerField('gameid', validators=[DataRequired()])
@@ -16,7 +16,7 @@ class StudentHelper(FlaskForm):
 
     submit = SubmitField('Insert Student Data')
 
-
+#Signup form for signup.html
 class SignupForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(max=20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(max=50)])
@@ -31,13 +31,15 @@ class SignupForm(FlaskForm):
         if user_unique_test is not None:
             raise ValidationError('This username is already taken!')
 
-
+#Login form for login.html
 class LoginForm(FlaskForm):
     username_or_email = StringField('Username', validators=[DataRequired(), Length(max=20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(max=50)])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Log In')
 
+
+#Class creation form for user.html
 class ClassForm(FlaskForm):
     class_code = StringField('code', validators=[DataRequired(), Length(max=20)])
     submit = SubmitField('Create Class')
@@ -51,14 +53,14 @@ class ClassForm(FlaskForm):
 
 
 
-    
+#enrolment form for enrolment.html
 class EnrolForm(FlaskForm):
     studentname = StringField('studentname', validators=[DataRequired(), Length(max=20)])
     studentcode = StringField('studentcode', validators=[DataRequired(), Length(max=50)])
     classcode = StringField('classcode', validators=[DataRequired(), Length(max=20)])
     submit = SubmitField('Enrol')
 
-
+#useredit form for useredit.html
 class UserEditForm(FlaskForm):
     classname = StringField('classname', validators=[DataRequired()])
     newclassname = StringField('newclassname', validators=[DataRequired()])
