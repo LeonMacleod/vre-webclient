@@ -3,8 +3,8 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="../../static/css/forms.css">
-<link rel="stylesheet" type="text/css" href="../../static/css/base.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/forms.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/base.css') }}">
 
 
 <div id="form-container" style="height: 50vh">
@@ -13,7 +13,7 @@
         <p>Edit Class Name</p>
 
 
-        
+    
 
     </div>
 

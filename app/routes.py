@@ -215,41 +215,53 @@ def user(username):
 # User edit route, where users edit the name of their classes.
 #takes parameter user as each user has a specific page that has a /edit route.
 
-@app.route('/user/<username>/edit', methods=['GET', 'POST'])
-def UserEdit(username):
+@app.route('/user/<username>/edit/<code>', methods=['GET', 'POST'])
+def UserEdit(username, code):
 
 
     #specifying form from forms.py
     form = UserEditForm()
+
+    form.classname.data = code
+    print(code)
+
+    #class code to be used in the page.
+
+
+    #form.classname.data = classcode
 
     # if this user does not exist throw 404 (redirected to 404 page which specifies page not found)
     user = Users.query.filter_by(username=username).first_or_404()
 
     #even if the user exists it may not be the right user on the page therefore ensuring the user on the page now owns the page.
     if(current_user.get_id() == user.get_id()):
+        if request.method == "POST":
+            #on form validation.    
+            if(form.validate_on_submit):
 
-        #on form validation.    
-        if(form.validate_on_submit):
+                print("validate")
 
-            #curren t classname from form.
-            current_classname = form.classname.data;
-            #specified classname to change above classname into
-            change_classname = form.newclassname.data;
-            
-            #checking to ensure the provided current classname actually exists.
-            classs = Classs.query.filter_by(classcode = current_classname).first()
+                #curren t classname from form.
+                current_classname = form.classname.data;
+                #specified classname to change above classname into
+                change_classname = form.newclassname.data;
+                
+                #checking to ensure the provided current classname actually exists.
+                classs = Classs.query.filter_by(classcode = current_classname).first()
 
-            # to ensure the user does not attempt to rename their class to an already existing class.
-            classs_changereq = Classs.query.filter_by(classcode = change_classname).first()
 
-            #if the providesd class name exists and the one specified for change is not already a class name the change may occur.
-            if classs is not None and classs_changereq is None:
-                classs.classcode = change_classname
-                db.session.commit()
-                return redirect(url_for('user', username=username))
-            else:
-                # if the above characteristics are not met.
-                flash("The entered classcode does not exist!")
+                # to ensure the user does not attempt to rename their class to an already existing class.
+                classs_changereq = Classs.query.filter_by(classcode = change_classname).first()
+
+                #if the providesd class name exists and the one specified for change is not already a class name the change may occur.
+                # we must also check that the user attempting to edit this class actually owns the class.
+                if classs is not None and classs_changereq is None and classs.teacherid == current_user.get_id() :
+                    classs.classcode = change_classname
+                    db.session.commit()
+                    return redirect(url_for('user', username=username))
+                else:
+                    # if the above characteristics are not met.
+                    return redirect(url_for('user', username=username))
 
     #redirects:
         return render_template('useredit.html', form=form)
@@ -323,12 +335,12 @@ def StudentDataHelper():
 #in the event of a 404 error the user is directed to the 404 page.
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404)
+    return render_template('404.html'), 404
 
 #in the event of a 500 server error I will still load the 404 page as it is not error specific.
 @app.errorhandler(500)
 def internal_error(error):
-    return render_template('404.html', 404)
+    return render_template('404.html'), 404
 
 #Handling the help page.
 @app.route('/help')
