@@ -11,7 +11,6 @@ import json
 #Route that handles page signup
 @app.route('/signup', methods=['GET', 'POST'])
 def Signup():
-
     # getting the WTFORM from the forms.py file.
     form = SignupForm()
 
